@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLACK-BOX | Live Telemetry & Inspection Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-telemetry.js"></script>
+    <link rel="stylesheet" href="style.css?v=1.1">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            scroll-behavior: smooth;
+        }
+
+        /* Replicating the distinct soft, rounded card aesthetics of the reference image */
+        .dashboard-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Subtle grid background for the coordinate mapping panel */
+        .map-grid {
+            background-image: linear-gradient(to right, rgba(203, 213, 225, 0.4) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(203, 213, 225, 0.4) 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-color: #f8fafc;
+        }
+
+        /* Interactive Joystick UI styling */
+        .joystick-outer {
+            width: 150px;
+            height: 150px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .joystick-inner {
+            width: 65px;
+            height: 65px;
+            background: #334155;
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+            transition: transform 0.05s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .joystick-inner:active {
+            cursor: grabbing;
+        }
+
+        /* Modal Overlay configuration */
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Custom subtle scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Simulated Thermal Image Filter Overlay */
+        .thermal-gradient {
+            background: linear-gradient(to bottom, #4f46e5, #ec4899, #f59e0b, #ef4444);
+        }
+    </style>
+</head>
+<body class="p-3 md:p-6 space-y-8 max-w-[1600px] mx-auto">
+
+    <header class="sticky top-6 z-50 bg-white/80 backdrop-blur-md rounded-xl border border-gray-200 px-4 py-3 flex flex-wrap justify-between items-center gap-4 shadow-md">
+        <div class="flex items-center space-x-2">
+            <span class="flex space-x-1 mr-4">
+                <span class="w-3 h-3 bg-red-400 rounded-full inline-block"></span>
+                <span class="w-3 h-3 bg-yellow-400 rounded-full inline-block"></span>
+                <span class="w-3 h-3 bg-green-400 rounded-full inline-block"></span>
+            </span>
+            <nav id="main-nav" class="flex space-x-1 text-xs font-medium text-gray-600 bg-gray-100 p-1 rounded-lg">
+                <a href="#telemetry" class="nav-link px-3 py-1.5 rounded-md transition bg-white text-black shadow-sm">Telemetry</a>
+                <a href="#inspection" class="nav-link px-3 py-1.5 rounded-md transition hover:bg-white/50">Inspection</a>
+                <a href="#controls" class="nav-link px-3 py-1.5 rounded-md transition hover:bg-white/50">Control</a>
+                <a href="#support" class="nav-link px-3 py-1.5 rounded-md transition hover:bg-white/50">Support</a>
+            </nav>
+        </div>
+        
+        <div class="flex items-center space-x-4 text-xs text-gray-500">
+            <span class="flex items-center space-x-1">
+                <i data-lucide="shield-check" class="w-4 h-4 text-green-600"></i>
+                <span class="font-mono text-[11px]">SYS OK</span>
+            </span>
+            <span class="border-l pl-4 font-mono text-[11px]" id="live-clock">N/A</span>
+            <button id="dark-mode-toggle" class="p-1.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                <i data-lucide="moon" class="w-4 h-4"></i>
+            </button>
+            <div class="w-6 h-6 bg-slate-800 rounded-full flex items-center justify-center text-white font-bold text-xs">AP</div>
+        </div>
+    </header>
+
+    <section id="telemetry" class="dashboard-card p-5 scroll-mt-24">
+        <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-100">
+            <h2 class="text-base font-bold text-gray-800 flex items-center tracking-tight">
+                Live Telemetry & Hardware Status <span class="text-xs font-normal text-gray-400 ml-2">(Scroll View)</span>
+            </h2>
+
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <div class="lg:col-span-5 map-grid rounded-xl border border-gray-200 relative overflow-hidden flex flex-col justify-between min-h-[360px]">
+                <div class="p-3 flex justify-between items-start z-10 pointer-events-none">
+                    <div class="bg-white/90 backdrop-blur-sm p-2.5 rounded-lg border border-gray-200 shadow-sm pointer-events-auto">
+                        <p class="text-[11px] font-bold text-gray-700 mb-1">Live Drone Location</p>
+                        <div class="font-mono text-[10px] text-gray-600 space-y-0.5">
+                            <p>Latitude: <span id="gps-lat-coord">37.3733</span></p>
+                            <p>Longitude: <span id="gps-long-coord">32.3287</span></p>
+                            <p>Altitude: <span id="altitude-coord">53.2583</span></p>
+                            <p>Speed: <span id="speed-coord">37.0789</span></p>
+                            <p>Signal: <span id="signal-strength-coord">35.3393</span></p>
+                            <p>Status: <span id="drone-status">active</span></p>
+                        </div>
+                    </div>
+                    <span class="bg-white px-2 py-1 rounded border text-[10px] font-medium text-gray-700 shadow-sm pointer-events-auto">
+                        Live drone location
+                    </span>
+                </div>
+
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <svg class="w-full h-full p-4" viewBox="0 0 300 300">
+                        <path d="M 60 80 L 60 200 L 120 200 L 120 220 L 220 220 L 220 120 L 160 120 L 160 80 Z" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linejoin="round" />
+                        <g id="drone-location-marker" transform="translate(160,80)">
+                            <circle cx="0" cy="0" r="12" fill="rgba(34, 197, 94, 0.2)" class="animate-ping" />
+                            <circle cx="0" cy="0" r="6" fill="#16a34a" />
+                            <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
+                        </g>
+                        <circle cx="60" cy="80" r="4" fill="#64748b" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-3.5">
+                <div data-telemetry="battery" class="dashboard-card p-4 cursor-pointer hover:border-emerald-500 transition-all border-t-4 border-t-emerald-500 group">
+                    <div class="flex justify-between items-start mb-2">
+                        <i data-lucide="battery-medium" class="w-5 h-5 text-emerald-600"></i>
+                        <i data-lucide="info" class="w-3.5 h-3.5 text-gray-300 group-hover:text-emerald-500 transition"></i>
+                    </div>
+                    <p class="text-xs font-medium text-gray-500 text-center">Battery</p>
+                    <p class="text-2xl font-bold text-center mt-1" id="battery-percentage">68%</p>
+                    <p class="text-[11px] text-gray-400 text-center" id="battery-remaining">68% remaining</p>
+                    <div class="w-full bg-gray-100 h-1.5 mt-3 rounded-full overflow-hidden">
+                        <div class="bg-emerald-500 h-full rounded-full" id="battery-progress-bar" style="width: 68%"></div>
+                    </div>
+                </div>
+
+                <div data-telemetry="time" class="dashboard-card p-4 cursor-pointer hover:border-blue-400 transition-all group">
+                    <div class="flex justify-between items-start mb-2">
+                        <i data-lucide="clock" class="w-5 h-5 text-slate-700"></i>
+                        <i data-lucide="info" class="w-3.5 h-3.5 text-gray-300 group-hover:text-blue-500 transition"></i>
+                    </div>
+                    <p class="text-xs font-medium text-gray-500 text-center">Time</p>
+                    <p class="text-2xl font-bold text-center mt-1 font-mono" id="flight-time">01:24:08</p>
+                    <p class="text-[11px] text-gray-400 text-center">Flight time</p>
+                </div>
+
+                <div data-telemetry="wind" class="dashboard-card p-4 cursor-pointer hover:border-blue-400 transition-all group">
+                    <div class="flex justify-between items-start mb-2">
+                        <i data-lucide="wind" class="w-5 h-5 text-slate-700"></i>
+                        <i data-lucide="info" class="w-3.5 h-3.5 text-gray-300 group-hover:text-blue-500 transition"></i>
+                    </div>
+                    <p class="text-xs font-medium text-gray-500 text-center">Wind speed</p>
+                    <p class="text-2xl font-bold text-center mt-1 font-mono" id="wind-speed">12.3 <span class="text-xs font-normal">m/s</span></p>
+                    <p class="text-[11px] text-gray-400 text-center">Wind speed</p>
+                </div>
+
+                <div class="dashboard-card p-3 flex flex-col justify-between">
+                    <p class="text-[10px] font-bold text-gray-500 text-right">Temperature</p>
+                    <div class="h-12 w-full flex items-end pt-2">
+                        <svg class="w-full h-full overflow-visible" viewBox="0 0 100 30" preserveAspectRatio="none">
+                            <path d="M0 25 Q15 5 30 20 T60 10 T100 15 L100 30 L0 30 Z" fill="rgba(34, 197, 94, 0.1)"/>
+                            <path d="M0 25 Q15 5 30 20 T60 10 T100 15" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <div class="flex justify-between text-[8px] text-gray-400 font-mono mt-1 border-t pt-1">
+                        <span>29</span><span>25</span><span>30</span><span>35</span><span>50</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-card p-3 flex flex-col justify-between">
+                    <p class="text-[10px] font-bold text-gray-500 text-left">Wind gusts</p>
+                    <div class="h-12 w-full flex items-end pt-2">
+                        <svg class="w-full h-full overflow-visible" viewBox="0 0 100 30" preserveAspectRatio="none">
+                            <path d="M0 20 L15 10 L25 25 L40 5 L55 20 L70 2 L85 18 L100 12" fill="none" stroke="#0ea5e9" stroke-width="1.2"/>
+                        </svg>
+                    </div>
+                    <div class="flex justify-between text-[8px] text-gray-400 font-mono mt-1 border-t pt-1">
+                        <span>100</span><span>120</span><span>150</span><span>160</span><span>200</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-card p-3 flex flex-col justify-between">
+                    <p class="text-[10px] font-bold text-gray-500 text-right">Battery drain</p>
+                    <div class="h-12 w-full flex items-end pt-2">
+                        <svg class="w-full h-full overflow-visible" viewBox="0 0 100 30" preserveAspectRatio="none">
+                            <path d="M0 2 Q20 5 40 12 T80 20 T100 25" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+                            <circle cx="100" cy="25" r="2.5" fill="#ef4444" />
+                        </svg>
+                    </div>
+                    <div class="flex justify-between text-[8px] text-gray-400 font-mono mt-1 border-t pt-1">
+                        <span>160</span><span>230</span><span>300</span><span>350</span><span>400</span>
+                    </div>
+                </div>
+
+                <div data-telemetry="distance" class="dashboard-card p-4 cursor-pointer hover:border-purple-400 transition-all group">
+                    <div class="flex justify-center mb-1">
+                        <i data-lucide="map-pin" class="w-5 h-5 text-slate-700"></i>
+                    </div>
+                    <p class="text-xs font-medium text-gray-500 text-center mt-1">Distance</p>
+                    <p class="text-2xl font-bold text-center mt-0.5 font-mono" id="distance">4.7 <span class="text-xs font-normal">km</span></p>
+                    <p class="text-[11px] text-gray-400 text-center">km covered</p>
+                </div>
+
+                <div data-telemetry="pi" class="dashboard-card p-4 cursor-pointer hover:border-emerald-500 transition-all border-t-4 border-t-emerald-500 group relative">
+                    <i data-lucide="info" class="w-3 h-3 text-gray-300 absolute top-3 right-3 group-hover:text-emerald-500 transition"></i>
+                    <div class="flex justify-center mb-1">
+                        <i data-lucide="cpu" class="w-6 h-6 text-emerald-600"></i>
+                    </div>
+                    <p class="text-xs font-medium text-gray-800 text-center font-bold mt-2 leading-tight">Raspberry Pi<br><span id="rpi-temperature">temperature</span></p>
+                </div>
+
+                <div data-telemetry="hardware" class="dashboard-card p-4 cursor-pointer hover:border-slate-400 transition-all group">
+                    <div class="flex justify-center mb-1">
+                        <i data-lucide="circuit-board" class="w-5 h-5 text-slate-700"></i>
+                    </div>
+                    <p class="text-xs font-medium text-gray-800 text-center font-bold mt-3 leading-tight">Hardware<br>status</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="inspection" class="dashboard-card p-5 space-y-4 scroll-mt-24">
+        <h2 class="text-base font-bold text-gray-800 tracking-tight pb-2 border-b border-gray-100">
+            Aerial Inspection <span class="text-xs font-normal text-gray-400 ml-1">(Continuous Scroll View)</span>
+        </h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+            <div class="lg:col-span-8 flex flex-col space-y-2">
+                <p class="text-xs font-bold text-gray-700">Drone Footage Feed</p>
+                <div class="relative rounded-xl overflow-hidden bg-slate-900 border border-gray-300 flex-1 min-h-[320px] md:min-h-[380px] shadow-inner flex items-center justify-center">
+                    <div class="absolute inset-0 bg-[radial-gradient(#475569_1px,transparent_1px)] bg-[size:16px_16px] opacity-20"></div>
+                    
+                    <img id="drone-feed-image" src="https://jiralwhytbvzdnkcekab.supabase.co/storage/v1/object/public/photos/detected_1778825732_pos_-3.77_-8.20_1.87.jpg" alt="Drone Footage" class="object-cover w-full h-full rounded-xl">
+
+                    <!-- Metadata Overlay -->
+                    <div class="absolute bottom-4 left-4 right-4 z-20 flex justify-between items-end">
+                        <div class="bg-black/60 backdrop-blur-md p-2 rounded-lg border border-white/20 text-white font-mono text-[10px] space-y-0.5">
+                            <p class="flex items-center gap-1.5"><i data-lucide="clock" class="w-3 h-3 text-emerald-400"></i> <span id="image-timestamp">N/A</span></p>
+                            <p class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3 h-3 text-blue-400"></i> Lat: <span id="image-x-coord">0.0000</span>, Long: <span id="image-y-coord">0.0000</span> (Alt: <span id="image-z-coord">0.0</span>m)</p>
+                            <p class="flex items-center gap-1.5"><i data-lucide="plane" class="w-3 h-3 text-amber-400"></i> Aero Inspection: <span id="aero-inspection-time">00:00:00</span></p>
+                        </div>
+                    </div>
+
+                    <div class="absolute top-4 left-4 z-10 flex items-center space-x-2">
+                        <span class="bg-red-500/90 backdrop-blur text-white text-[9px] px-2 py-0.5 rounded font-bold animate-pulse tracking-widest">REC</span>
+                        <span class="bg-black/60 text-white text-[9px] px-2 py-0.5 rounded backdrop-blur font-mono">FHD 1080p | 60 FPS</span>
+                    </div>
+
+                    <div class="absolute inset-4 border border-white/20 pointer-events-none flex justify-between items-between">
+                        <div class="w-6 h-6 border-t-2 border-l-2 border-white/60"></div>
+                        <div class="w-6 h-6 border-t-2 border-r-2 border-white/60"></div>
+                    </div>
+                    <div class="absolute inset-4 pointer-events-none flex justify-between items-end">
+                        <div class="w-6 h-6 border-b-2 border-l-2 border-white/60"></div>
+                        <div class="w-6 h-6 border-b-2 border-r-2 border-white/60"></div>
+                    </div>
+
+                    <div class="absolute inset-0 pointer-events-none opacity-20 bg-[linear-gradient(rgba(0,0,0,0)_90%,rgba(34,197,94,0.4)_100%)] bg-[length:100%_20px] animate-[slide_4s_linear_infinite]"></div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 flex flex-col space-y-4">
+                <div>
+                    <p class="text-xs font-bold text-gray-700 mb-2">Thermal Image</p>
+                    <div class="relative rounded-xl overflow-hidden h-[160px] bg-slate-900 border border-gray-300 flex items-center justify-center p-2">
+                        <div class="w-full h-full rounded thermal-gradient opacity-90 blur-[2px] relative flex items-center justify-center">
+                            <div class="w-[60%] h-[40%] bg-amber-400 rounded-full blur-md absolute animate-pulse"></div>
+                            <div class="w-[30%] h-[20%] bg-white rounded-full blur-sm absolute"></div>
+                        </div>
+                        
+                        <div class="absolute right-2 top-2 bottom-2 w-3 bg-gradient-to-b from-red-500 via-amber-500 via-purple-600 to-indigo-900 rounded border border-white/20 flex flex-col justify-between items-center py-1 text-[7px] text-white font-mono">
+                            <span>92.0</span>
+                            <span>-07.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-3 rounded-xl border border-gray-200">
+                    <p class="text-xs font-bold text-gray-700 mb-2">Inspection Progress</p>
+                    <div class="flex justify-around items-center pt-1">
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 h-8 rounded-full border-2 border-emerald-500 flex items-center justify-center text-emerald-600 font-bold text-xs">✓</div>
+                            <span class="text-[9px] text-gray-500 mt-1">Sectors</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 h-8 rounded-full border-2 border-emerald-500 flex items-center justify-center text-xs">
+                                <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-emerald-600"></i>
+                            </div>
+                            <span class="text-[9px] text-gray-500 mt-1">Scan Sync</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 h-8 rounded-full border-2 border-emerald-500 flex items-center justify-center text-xs">
+                                <i data-lucide="database" class="w-3.5 h-3.5 text-emerald-600"></i>
+                            </div>
+                            <span class="text-[9px] text-gray-500 mt-1">Logs</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 h-8 rounded-full border-2 border-emerald-500 flex items-center justify-center text-xs">
+                                <i data-lucide="cpu" class="w-3.5 h-3.5 text-emerald-600"></i>
+                            </div>
+                            <span class="text-[9px] text-gray-500 mt-1">Edge TPU</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4 pt-2">
+            <div class="md:col-span-5 dashboard-card p-4 flex flex-col justify-between">
+                <p class="text-xs font-bold text-gray-800 mb-2 pb-1 border-b">Live AI Detection Stats</p>
+                <div class="grid grid-cols-3 gap-2 mb-3">
+                    <div>
+                        <p class="text-[10px] text-gray-500 leading-none font-medium">Images Taken</p>
+                        <p class="text-xl font-bold font-mono mt-1 text-gray-800" id="stats-images-taken">254</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-500 leading-none font-medium">Buildings Covered</p>
+                        <p class="text-xl font-bold font-mono mt-1 text-gray-800" id="stats-buildings-covered">3/5</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-500 leading-none font-medium">Area Inspected</p>
+                        <p class="text-xl font-bold font-mono mt-1 text-gray-800" id="stats-area-inspected">1.2 <span class="text-xs font-normal">Acres</span></p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-2.5 rounded-lg border">
+                    <p class="text-[10px] font-bold text-gray-500 mb-1">Detections</p>
+                    <div class="grid grid-cols-4 gap-1 text-center">
+                        <div>
+                            <p class="text-[10px] text-gray-600">Cracks</p>
+                            <p class="text-base font-bold text-slate-800 font-mono" id="stats-cracks">27</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-600">Water</p>
+                            <p class="text-base font-bold text-slate-800 font-mono" id="stats-water">12</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-600">Rust</p>
+                            <p class="text-base font-bold text-slate-800 font-mono" id="stats-rust">34</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-600">Uneven</p>
+                            <p class="text-base font-bold text-slate-800 font-mono" id="stats-uneven">6</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-3 dashboard-card p-3 flex flex-col items-center justify-between">
+                <p class="text-xs font-bold text-gray-800 w-full text-center">Detection Distribution</p>
+                <div class="w-full max-w-[160px] my-2">
+                    <canvas id="defectPieChart" width="262" height="264" style="display: block; box-sizing: border-box; height: 160px; width: 159px;"></canvas>
+                </div>
+            </div>
+
+            <div class="md:col-span-4 dashboard-card p-3 flex flex-col justify-between">
+                <p class="text-xs font-bold text-gray-800 mb-1">Defect Detection</p>
+                <div class="h-24 w-full flex items-end pt-1 relative">
+                    <div class="absolute left-0 top-0 bottom-6 flex flex-col justify-between text-[8px] text-gray-400 font-mono pr-1 border-r">
+                        <span>8</span><span>6</span><span>4</span><span>2</span><span>0</span>
+                    </div>
+                    <div class="pl-4 w-full h-full flex items-end">
+                        <svg class="w-full h-full overflow-visible" viewBox="0 0 100 40" preserveAspectRatio="none">
+                            <path d="M0 35 L10 25 L20 30 L30 15 L40 32 L50 20 L60 22 L70 12 L80 25 L90 5 L100 28" fill="none" stroke="#0f766e" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-[9px] text-center text-gray-400 font-mono mt-1 border-t pt-1">Minutes</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="controls" class="dashboard-card p-5 scroll-mt-24">
+        <h2 class="text-base font-bold text-gray-800 tracking-tight pb-2 mb-4 border-b border-gray-100">
+            Drone Control & Troubleshooting
+        </h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-6 bg-white rounded-xl border border-gray-200 p-4 flex flex-col justify-between">
+                <div>
+                    <p class="text-xs font-bold text-gray-800 mb-1">Manual Control Panel</p>
+                    <p class="text-[11px] text-gray-400 mb-4">Interactive 4-axis joystick control</p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-around gap-6 my-2">
+                    <div class="relative flex items-center justify-center">
+                        <div class="absolute -top-1 -left-1 w-4 h-4 rounded-full bg-slate-400 border border-white shadow"></div>
+                        <div class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-slate-400 border border-white shadow"></div>
+                        <div class="absolute -bottom-1 -left-1 w-4 h-4 rounded-full bg-slate-400 border border-white shadow"></div>
+                        <div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-slate-400 border border-white shadow"></div>
+                        
+                        <div class="joystick-outer">
+                            <div class="joystick-inner" id="interactive-joystick">
+                                <div class="w-3 h-3 rounded-full bg-slate-400/40 pointer-events-none flex items-center justify-center">
+                                    <div class="w-1 h-1 rounded-full bg-white"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full max-w-[160px] h-24 border border-gray-300 rounded bg-gray-50 grid grid-cols-6 grid-rows-3 relative">
+                        <div class="border-b border-r border-gray-200"></div><div class="border-b border-r border-gray-200"></div><div class="border-b border-r border-gray-200"></div><div class="border-b border-r border-gray-200"></div><div class="border-b border-r border-gray-200"></div><div class="border-b border-gray-200"></div>
+                        <div class="border-b border-r border-gray-200"></div><div class="border-b border-r border-gray-200"></div><div class="border-b border-r border-gray-200"></div><div class="border-b border-r border-gray-200"></div><div class="border-b border-r border-gray-200"></div><div class="border-b border-gray-200"></div>
+                        <div class="border-r border-gray-200"></div><div class="border-r border-gray-200"></div><div class="border-r border-gray-200"></div><div class="border-r border-gray-200"></div><div class="border-r border-gray-200"></div><div></div>
+                        <div class="absolute top-[60%] left-[30%] w-2.5 h-2.5 bg-emerald-600 rounded-full shadow pointer-events-none transform -translate-x-1/2 -translate-y-1/2"></div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 mt-4 border-t pt-4">
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="text-[11px] font-medium text-gray-700">Gimbal Tilt</label>
+                            <span class="text-[11px] font-mono text-gray-500" id="tilt-val">-15°</span>
+                        </div>
+                        <input type="range" min="-90" max="30" value="-15" id="tilt-slider" class="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-slate-700">
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="text-[11px] font-medium text-gray-700">Camera Zoom</label>
+                            <span class="text-[11px] font-mono text-gray-500" id="zoom-val">2.0x</span>
+                        </div>
+                        <input type="range" min="1" max="10" step="0.1" value="2.0" id="zoom-slider" class="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-slate-700">
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-6 bg-white rounded-xl border border-gray-200 flex flex-col justify-between h-[360px] overflow-hidden shadow-sm">
+                <div class="bg-gray-50 px-3 py-2 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex items-center space-x-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse inline-block"></span>
+                        <span class="text-xs font-bold text-gray-700">AeroScan AI Assistant</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-gray-400">
+                        <button class="hover:text-gray-600"><i data-lucide="minus" class="w-3.5 h-3.5"></i></button>
+                        <button class="hover:text-gray-600"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+                    </div>
+                </div>
+
+                <div class="flex-1 overflow-y-auto p-3 space-y-2.5 text-xs bg-white" id="ai-chat-window">
+                    <div class="flex justify-end">
+                        <div class="bg-slate-800 text-white p-2 rounded-lg rounded-tr-none max-w-[85%] shadow-sm">
+                            Show me the distribution of water pooling.
+                        </div>
+                    </div>
+
+                    <div class="flex justify-start">
+                        <div class="bg-gray-100 text-gray-800 p-2.5 rounded-lg rounded-tl-none max-w-[85%] shadow-sm space-y-1">
+                            <p>Here is the distribution chart of structural defect telemetry. You currently have <span class="font-bold font-mono">12 detections</span> localized along the southern perimeter flashing profiles.</p>
+                            <div class="h-10 w-full bg-white border rounded p-1 mt-1 flex items-end">
+                                <svg class="w-full h-full overflow-visible" viewBox="0 0 100 20" preserveAspectRatio="none">
+                                    <path d="M0 15 L20 12 L40 18 L60 5 L80 14 L100 8" fill="none" stroke="#0ea5e9" stroke-width="1.5"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <div class="bg-slate-800 text-white p-2 rounded-lg rounded-tr-none max-w-[85%] shadow-sm">
+                            The thermal feed is lagging. What do I check?
+                        </div>
+                    </div>
+
+                    <div class="flex justify-start">
+                        <div class="bg-gray-100 text-gray-800 p-2.5 rounded-lg rounded-tl-none max-w-[85%] shadow-sm space-y-1.5">
+                            <p>Check network bandwidth in the Telemetry section. If below 5Mbps, consider manual control and a closer inspection path. Or click 'Troubleshoot Network' below.</p>
+                            <button onclick="appendAiMessage('Running automated socket interface transponder optimization... Uplink stabilized at 12.4 Mbps.')" class="bg-white hover:bg-gray-50 text-[11px] font-medium text-slate-700 px-2 py-1 rounded border shadow-xs transition w-full text-left flex items-center justify-between">
+                                <span>⚡ Troubleshoot Network</span>
+                                <i data-lucide="chevron-right" class="w-3 h-3 text-gray-400"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-2 bg-gray-50 border-t border-gray-200">
+                    <form id="ai-input-form" class="flex items-center space-x-1">
+                        <input type="text" id="ai-user-input" placeholder="Type a message..." class="flex-1 bg-white border border-gray-300 rounded-md px-2.5 py-1.5 text-xs focus:outline-none focus:border-slate-500 transition">
+                        <button type="submit" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-md transition shadow-sm">
+                            <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="support" class="bg-white rounded-b-xl border border-gray-200 px-4 py-3 flex flex-wrap justify-between items-center text-xs text-gray-500 gap-4 shadow-sm">
+        <div class="flex space-x-4">
+            <a href="#" class="hover:text-gray-800 transition font-medium">About</a>
+            <a href="#" class="hover:text-gray-800 transition font-medium">Help</a>
+            <a href="#" class="hover:text-gray-800 transition font-medium">System Time: <span class="font-mono">18:32:05 CST</span></a>
+            <a href="#" class="hover:text-gray-800 transition font-medium">Legal</a>
+            <a href="#" class="hover:text-gray-800 transition font-medium">User Guide</a>
+            <a href="#" class="hover:text-gray-800 transition font-medium">API Access</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span class="flex items-center space-x-1 text-emerald-600 font-medium">
+                <i data-lucide="wifi" class="w-3.5 h-3.5 mr-1"></i>
+                <span class="font-mono text-[11px]">98% SIGNAL</span>
+            </span>
+            <span class="font-mono text-[11px] bg-gray-50 px-2 py-1 rounded border text-gray-600">
+                2026/5/9 19:32
+            </span>
+        </div>
+    </footer>
+
+    <div id="modal-overlay" onclick="closeModal()">
+        <div class="bg-white rounded-xl border border-gray-200 p-6 max-w-md w-full m-4 shadow-2xl relative" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+            <div class="flex items-center space-x-2 mb-3 pb-2 border-b">
+                <i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i>
+                <h3 id="modal-title" class="text-sm font-bold text-gray-800">Telemetry Hardware Subsystem</h3>
+            </div>
+            <pre id="modal-content" class="text-xs font-mono text-gray-600 whitespace-pre-wrap leading-relaxed bg-gray-50 p-3 rounded-lg border overflow-x-auto"></pre>
+            <div class="mt-4 flex justify-end">
+                <button onclick="closeModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-md text-xs font-medium transition shadow-sm">
+                    Acknowledge
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mount & trigger Lucide UI element icons setup
+        lucide.createIcons();
+
+        // Telemetry Data Registry
+        const telemetryRegistry = {
+            battery: { title: 'Battery Management System', content: 'Battery State of Charge: 68%\nBus Voltage: 22.4 V\nCurrent Draw: 14.2 A\nIndividual Cell Voltages:\n- Cell 1: 3.73 V\n- Cell 2: 3.74 V\n- Cell 3: 3.73 V\n- Cell 4: 3.74 V\n- Cell 5: 3.73 V\n- Cell 6: 3.73 V\n\nTemperature: 32°C\nStatus: Optimal Discharging' },
+            time: { title: 'Flight Time Execution', content: 'Mission Duration: 01:24:08\nTotal Compute Hub Uptime: 04:12:33\nEstimated Flight Reserve: 18 mins\nPropulsion Systems Active: True' },
+            wind: { title: 'Anemometer Wind Metrics', content: 'Sustained Vector Velocity: 12.3 m/s\nPeak Gust Recorded: 18.1 m/s\nHeading Direction: 240° WSW\nCrosswind Force Delta: Nominal' },
+            distance: { title: 'Geospatial Coverage', content: 'Total Aerial Distance Traversed: 4.7 km\nGround Speed Avg: 8.2 m/s\nTelemetry Transceiver Uplink RSSI: -64 dBm\nWaypoints Executed: 14 / 22' },
+            pi: { title: 'Raspberry Pi Edge Hardware Metrics', content: 'Hardware Arch: BCM2711 (Quad-core Cortex-A72)\nCore Temperature: 54.2°C (Thermal Throttling Threshold: 80°C)\nCPU Load Avg: [ 0.42, 0.38, 0.31 ]\nMemory Utilization: 1.4 GB / 3.8 GB (36%)\nEdge AI Edge TPU Acceleration: Active\nStorage Volume Read/Write: 12.4 MB/s' },
+            hardware: { title: 'Comprehensive Subsystem Hardware Matrix', content: 'Subsystem 1 (IMU): Nominal\nSubsystem 2 (LIDAR Altimeter): OK\nSubsystem 3 (Gimbal Encoders): Synchronized\nSubsystem 4 (Video Stream Transcoder): OK\nSubsystem 5 (I2C Bus Communication): Nominal' }
+        };
+
+        // Attach listeners to telemetry cards
+        document.querySelectorAll('[data-telemetry]').forEach(card => {
+            card.addEventListener('click', () => {
+                const key = card.getAttribute('data-telemetry');
+                const data = telemetryRegistry[key];
+                if (data) showModal(data.title, data.content);
+            });
+        });
+
+
+
+        // Interactive modal handler mechanisms
+        function showModal(title, content) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-content').innerText = content;
+            document.getElementById('modal-overlay').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+        }
+
+        // Chart instance variable
+        window.defectChart = null;
+
+        // Setup Chart.js Pie Visualization matching the detection distribution profile
+        function initChart() {
+            const canvas = document.getElementById('defectPieChart');
+            if (!canvas) {
+                console.error("Canvas element 'defectPieChart' not found");
+                return;
+            }
+            const ctx = canvas.getContext('2d');
+            window.defectChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Cracks', 'Water', 'Rust', 'Uneven'],
+                    datasets: [{
+                        data: [1, 1, 1, 1],
+                        backgroundColor: [
+                            '#3b82f6', // Blue
+                            '#10b981', // Green
+                            '#ef4444', // Red
+                            '#f59e0b'  // Orange
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'right',
+                            labels: {
+                                boxWidth: 8,
+                                font: { size: 9 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Call initChart on load
+        initChart();
+
+        // Interface Joystick UI Translation Engine (Simulated Analog Gimbal Actuation Dragging)
+        const joystick = document.getElementById('interactive-joystick');
+        let isDragging = false;
+
+        const startDrag = (e) => { isDragging = true; e.preventDefault(); };
+        const stopDrag = () => {
+            isDragging = false;
+            joystick.style.transform = 'translate(0px, 0px)';
+            if (window.onJoystickMove) {
+                window.onJoystickMove(0, 0);
+            }
+        };
+
+        const moveJoystick = (e) => {
+            if (!isDragging) return;
+            
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+            const parent = joystick.parentElement.getBoundingClientRect();
+            const centerX = parent.left + parent.width / 2;
+            const centerY = parent.top + parent.height / 2;
+            
+            let moveX = clientX - centerX;
+            let moveY = clientY - centerY;
+            
+            const radiusLimit = 35;
+            const distance = Math.sqrt(moveX * moveX + moveY * moveY);
+            
+            if (distance > radiusLimit) {
+                const ratio = radiusLimit / distance;
+                moveX *= ratio;
+                moveY *= ratio;
+            }
+            
+            joystick.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            
+            // Notify Supabase
+            if (window.onJoystickMove) {
+                window.onJoystickMove(moveX, moveY);
+            }
+        };
+
+        joystick.addEventListener('mousedown', startDrag);
+        joystick.addEventListener('touchstart', startDrag);
+        window.addEventListener('mouseup', stopDrag);
+        window.addEventListener('touchend', stopDrag);
+        window.addEventListener('mousemove', moveJoystick);
+        window.addEventListener('touchmove', moveJoystick, { passive: false });
+
+        // Navigation Active State Handler
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('bg-white', 'text-black', 'shadow-sm');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('bg-white', 'text-black', 'shadow-sm');
+                }
+            });
+        });
+
+        // Setup Gimbal Slider Display Hooks
+        document.getElementById('tilt-slider').addEventListener('input', function(e) {
+            document.getElementById('tilt-val').textContent = e.target.value + '°';
+        });
+
+        document.getElementById('zoom-slider').addEventListener('input', function(e) {
+            document.getElementById('zoom-val').textContent = parseFloat(e.target.value).toFixed(1) + 'x';
+        });
+
+        // Custom AI Assistant Response Scripting Engine
+        const chatForm = document.getElementById('ai-input-form');
+        const chatInput = document.getElementById('ai-user-input');
+        const chatWindow = document.getElementById('ai-chat-window');
+
+        function appendUserMessage(text) {
+            const div = document.createElement('div');
+            div.className = 'flex justify-end';
+            div.innerHTML = `<div class="bg-slate-800 text-white p-2 rounded-lg rounded-tr-none max-w-[85%] shadow-sm">${text}</div>`;
+            chatWindow.appendChild(div);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        function appendAiMessage(text) {
+            const div = document.createElement('div');
+            div.className = 'flex justify-start';
+            div.innerHTML = `<div class="bg-gray-100 text-gray-800 p-2.5 rounded-lg rounded-tl-none max-w-[85%] shadow-sm space-y-1"><p>${text}</p></div>`;
+            chatWindow.appendChild(div);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const prompt = chatInput.value.trim();
+            if (!prompt) return;
+
+            appendUserMessage(prompt);
+            chatInput.value = '';
+
+            // Simulated Agentic Subsystem Hook Lookup responses
+            setTimeout(() => {
+                const lower = prompt.toLowerCase();
+                if (lower.includes('battery') || lower.includes('voltage')) {
+                    appendAiMessage('Current array stack telemetry reports nominal discharge parameters. Estimated operational buffer remains at 18 minutes under current propulsion loads.');
+                } else if (lower.includes('rust') || lower.includes('corrosion')) {
+                    appendAiMessage('Infrared spectro-analysis highlights 34 distinct structural rust regions. Primary cluster detected at Coordinates: 35.3393.');
+                } else if (lower.includes('emergency') || lower.includes('land')) {
+                    appendAiMessage('⚠️ CRITICAL: Manual intervention prompt recognized. Ground control lock engaged. Initializing autonomous deceleration protocol along Waypoint 0.');
+                } else {
+                    appendAiMessage('Query logged to Edge TPU compute hub log matrix. Awaiting telemetry synchronization from Raspberry Pi 4B serial arrays.');
+                }
+            }, 600);
+        });
+        </script>
+        <script>
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById("dark-mode-toggle");
+            const body = document.body;
+
+            // Check for saved dark mode preference or system preference
+            const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            const savedDarkMode = localStorage.getItem("dark-mode");
+
+            if (savedDarkMode === "true" || (savedDarkMode === null && prefersDarkMode)) {
+                body.classList.add("dark-mode");
+                if (darkModeToggle) {
+                    darkModeToggle.innerHTML = `<i data-lucide="sun" class="w-4 h-4"></i>`;
+                    lucide.createIcons(); // Re-render Lucide icons if updated
+                }
+            }
+
+            darkModeToggle.addEventListener("click", () => {
+                body.classList.toggle("dark-mode");
+                const isDarkMode = body.classList.contains("dark-mode");
+                localStorage.setItem("dark-mode", isDarkMode);
+                
+                // Update icon based on mode
+                if (darkModeToggle) {
+                    darkModeToggle.innerHTML = isDarkMode 
+                        ? `<i data-lucide="sun" class="w-4 h-4"></i>` 
+                        : `<i data-lucide="moon" class="w-4 h-4"></i>`;
+                    lucide.createIcons(); // Re-render Lucide icons if updated
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,457 @@
+/* Futuristic Drone Control Dashboard Styling */
+
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Share+Tech+Mono&display=swap");
+
+:root {
+    --bg-main: #eef1f6;
+    --card-bg: #ffffff;
+    --text-main: #1f2937;
+    --accent-color: #00e676; /* Green for active/glowing elements */
+    --border-color: #e5e7eb;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+body {
+    font-family: "Orbitron", sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* Override Tailwind default font to use Orbitron for headings and Share Tech Mono for data */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Orbitron", sans-serif;
+}
+
+p, span, div {
+    font-family: "Share Tech Mono", monospace;
+}
+
+.dashboard-card {
+    background: var(--card-bg);
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0 15px var(--shadow-color);
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 25px var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.map-grid {
+    background-image: linear-gradient(to right, var(--border-color) 1px, transparent 1px),
+                      linear-gradient(to bottom, var(--border-color) 1px, transparent 1px);
+    background-size: 25px 25px;
+    background-color: #0d0d0d;
+}
+
+/* Glowing effect for critical data points or active states */
+.glowing-text {
+    color: var(--accent-color);
+    text-shadow: 0 0 8px var(--accent-color);
+}
+
+.glowing-border {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 10px var(--accent-color) !important;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #00e676;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #00c853;
+}
+
+/* Specific overrides for the telemetry section for a darker, more futuristic look */
+#telemetry .dashboard-card {
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+    border: 1px solid rgba(0, 230, 118, 0.3);
+    box-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+}
+
+#telemetry .dashboard-card h2 {
+    color: #00e676;
+}
+
+#telemetry .dashboard-card p {
+    color: #b0b0b0;
+}
+
+#telemetry .dashboard-card .text-gray-400 {
+    color: #777 !important;
+}
+
+#telemetry .text-emerald-600 {
+    color: var(--accent-color) !important;
+}
+
+#telemetry .border-t-emerald-500 {
+    border-color: var(--accent-color) !important;
+}
+
+#telemetry .bg-emerald-500 {
+    background-color: var(--accent-color) !important;
+}
+
+.lucide {
+    color: var(--accent-color);
+}
+
+/* Ensure the map coordinates and status are readable */
+.map-grid .bg-white\/90 {
+    background-color: rgba(26, 26, 26, 0.9) !important;
+    border-color: var(--border-color) !important;
+}
+
+.map-grid .text-gray-700 {
+    color: var(--text-main) !important;
+}
+
+.map-grid .text-gray-600 {
+    color: #b0b0b0 !important;
+}
+
+.map-grid .bg-white {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-color) !important;
+}
+
+ .map-grid .px-2\.5 {
+    padding: 0.625rem !important;
+}
+
+.map-grid .rounded-lg {
+    border-radius: 0.5rem !important;
+}
+
+
+.map-grid .text-\[11px\] {
+    font-size: 0.6875rem !important;
+}
+
+/* Coordinate display specific styling */
+.map-grid .font-mono p {
+    font-size: 0.625rem;
+    color: #00e676;
+    text-shadow: 0 0 5px rgba(0, 230, 118, 0.5);
+}
+
+/* Progress bar */
+.w-full.bg-gray-100 {
+    background-color: #333 !important;
+}
+
+/* Override specific element styles to fit dark theme */
+header.bg-white\/80 {
+    background-color: rgba(26, 26, 26, 0.8) !important;
+    border-color: #333 !important;
+}
+
+header .nav-link.bg-white {
+    background-color: var(--accent-color) !important;
+    color: #0a0a0a !important;
+    box-shadow: 0 0 10px var(--accent-color) !important;
+}
+
+header .text-gray-600 {
+    color: #e0e0e0 !important;
+}
+
+header .text-gray-500 {
+    color: #a0a0a0 !important;
+}
+
+header .bg-gray-100 {
+    background-color: #2a2a2a !important;
+}
+
+footer.bg-white {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-color) !important;
+    box-shadow: 0 0 15px var(--shadow-color);
+}
+
+footer .text-gray-500 {
+    color: #a0a0a0 !important;
+}
+
+footer .hover\:text-gray-800:hover {
+    color: var(--accent-color) !important;
+}
+
+footer .bg-gray-50 {
+    background-color: #2a2a2a !important;
+    border-color: #333 !important;
+    color: #e0e0e0 !important;
+}
+
+/* Modal styling */
+#modal-overlay {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+#modal-overlay > div {
+    background: #1a1a1a;
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 0 20px var(--accent-color);
+}
+
+#modal-title {
+    color: var(--accent-color);
+}
+
+#modal-content {
+    background-color: #0d0d0d;
+    border-color: #333;
+    color: #e0e0e0;
+}
+
+#modal-overlay button.bg-slate-800 {
+    background-color: var(--accent-color) !important;
+    color: #0a0a0a !important;
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+#modal-overlay button.hover\:bg-slate-700:hover {
+    background-color: #00c853 !important;
+}
+
+/* General text color adjustments for a dark theme */
+.text-gray-800 {
+    color: #e0e0e0 !important;
+}
+
+.text-gray-700 {
+    color: #b0b0b0 !important;
+}
+
+.text-gray-500 {
+    color: #888888 !important;
+}
+
+.border-gray-100 {
+    border-color: #333333 !important;
+}
+
+.border-gray-200 {
+    border-color: #444444 !important;
+}
+
+/* Specific tweaks for Chart.js */
+#defectPieChart {
+    filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.4));
+}
+
+/* Joystick styling for dark theme */
+.joystick-outer {
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    box-shadow: inset 0 4px 6px rgba(0,0,0,0.4);
+    border: 1px solid var(--border-color);
+}
+
+.joystick-inner {
+    background: var(--accent-color);
+    box-shadow: 0 0 15px var(--accent-color);
+}
+
+.joystick-inner:active {
+    box-shadow: 0 0 20px var(--accent-color), 0 0 5px #fff;
+}
+
+.joystick-inner > div {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.joystick-inner > div > div {
+    background-color: #fff !important;
+}
+
+/* Slider styling */
+input[type="range"]::-webkit-slider-thumb {
+    background-color: var(--accent-color);
+    border: 1px solid var(--text-main);
+}
+
+input[type="range"]::-moz-range-thumb {
+    background-color: var(--accent-color);
+    border: 1px solid var(--text-main);
+}
+
+input[type="range"]::-ms-thumb {
+    background-color: var(--accent-color);
+    border: 1px solid var(--text-main);
+}
+
+.accent-slate-700 {
+    accent-color: var(--accent-color) !important;
+}
+
+/* AI chat window styling */
+#ai-chat-window {
+    background-color: #0a0a0a;
+}
+
+#ai-chat-window .bg-slate-800 {
+    background-color: #00e676 !important;
+    color: #0a0a0a !important;
+    box-shadow: 0 0 8px rgba(0, 230, 118, 0.4);
+}
+
+#ai-chat-window .bg-gray-100 {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #333;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+#ai-input-form input {
+    background-color: #1a1a1a;
+    border-color: #333;
+    color: #e0e0e0;
+}
+
+#ai-input-form button {
+    background-color: var(--accent-color);
+    color: #0a0a0a;
+    box-shadow: 0 0 8px var(--accent-color);
+}
+
+#ai-input-form button:hover {
+    background-color: #00c853;
+}
+
+.thermal-gradient {
+    background: linear-gradient(to bottom, #00e676, #00b8d4, #ffea00, #ff1744);
+    box-shadow: 0 0 15px rgba(0, 230, 118, 0.5);
+}
+
+.thermal-gradient .bg-amber-400 {
+    background-color: #ffea00 !important;
+    box-shadow: 0 0 20px #ffea00;
+}
+
+.thermal-gradient .text-red-500 {
+    color: #ff1744 !important;
+}
+
+.border-white\/20 {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* animations */
+@keyframes slide {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100%; }
+}
+
+.animate-\[slide_4s_linear_infinite\] {
+    animation: slide 4s linear infinite;
+}
+
+/* Mobile responsiveness (Tailwind already handles much of this, but adding specific tweaks) */
+@media (max-width: 768px) {
+    .dashboard-card {
+        padding: 1rem;
+    }
+
+    .map-grid .p-3 {
+        padding: 0.75rem !important;
+    }
+
+    .map-grid .text-\[11px\] {
+        font-size: 0.6rem !important;
+    }
+
+    .map-grid .font-mono p {
+        font-size: 0.55rem;
+    }
+
+    .joystick-outer {
+        width: 120px;
+        height: 120px;
+    }
+
+    .joystick-inner {
+        width: 50px;
+        height: 50px;
+    }
+
+    #ai-chat-window {
+        font-size: 0.7rem;
+    }
+
+    .flex-wrap {
+        flex-wrap: wrap;
+    }
+
+    header .space-x-1 {
+        margin-right: 0.5rem;
+    }
+
+    header .nav-link {
+        padding: 0.5rem 0.75rem;
+    }
+
+    footer .flex-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    footer .space-x-4 > *:not(:last-child) {
+        margin-right: 0 !important;
+        margin-bottom: 0.5rem;
+    }
+
+    footer .items-center {
+        margin-top: 0.5rem;
+    }
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    --bg-main: #0a0a0a;
+    --card-bg: #1a1a1a;
+    --text-main: #e0e0e0;
+    --accent-color: #00e676; /* Ensure accent color remains bright */
+    --border-color: #333333;
+    --shadow-color: rgba(0, 230, 118, 0.2);
+}
+
+/* Additional dark mode specific styles */
+body.dark-mode .map-grid {
+    background-color: #0a0a0a;
+}
+body.dark-mode header.bg-white\/80 {
+    background-color: rgba(10, 10, 10, 0.8) !important;
+}
+body.dark-mode footer.bg-white {
+    background-color: var(--card-bg) !important;
+}
+body.dark-mode #modal-overlay > div {
+    background: #0d0d0d;
+}
+body.dark-mode #ai-chat-window .bg-gray-100 {
+    background-color: #1a1a1a !important;
+}
+body.dark-mode #ai-input-form input {
+    background-color: #0a0a0a;
+}
