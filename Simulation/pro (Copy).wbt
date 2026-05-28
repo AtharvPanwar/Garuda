@@ -1,0 +1,2850 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/trees/protos/PalmTree.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/plants/protos/PottedTree.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/plants/protos/FlowerPot.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/Parquetry.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/apartment_structure/protos/Wall.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/manhole/protos/SquareManhole.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/bitcraze/crazyflie/protos/Crazyflie.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/stairs/protos/StraightStairs.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/VarnishedPine.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/solids/protos/SolidBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/trees/protos/Cypress.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.2647350019107878 0.4167195875376762 0.8696322004880708 1.2604660006466681
+  position -0.8099385483444377 -2.311309670618415 1.7627341831383927
+  follow "Crazyflie"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  size 30 30
+  appearance Parquetry {
+    type "light strip"
+    colorOverride 0.15 0.45 0.15
+  }
+}
+Wall {
+  translation -15 0 0
+  size 0.1 30 5
+}
+Wall {
+  translation 15 0 0
+  rotation 0 0 1 3.141592653589793
+  name "wall(1)"
+  size 0.1 30 5
+}
+Wall {
+  translation 0 15 0
+  rotation 0 0 1 -1.5707996938995747
+  name "wall(2)"
+  size 0.1 30 5
+}
+Floor {
+  translation -10 0 0.1
+  name "v_path"
+  size 2 23
+  appearance Parquetry {
+    type "light strip"
+    colorOverride 0.8 0.8 0.8
+  }
+}
+Wall {
+  translation 0 -15 0
+  rotation 0 0 1 1.5707996938995747
+  name "wall(3)"
+  size 0.1 30 5
+}
+Floor {
+  translation 11 0 0.1
+  name "v_path(1)"
+  size 2 23
+  appearance Parquetry {
+    type "light strip"
+    colorOverride 0.8 0.8 0.8
+  }
+}
+SolidBox {
+  translation 0 13.6 0.1
+  size 11 3 1
+  appearance PBRAppearance {
+    baseColor 0.239216 0.219608 0.27451
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/default/worlds/textures/tagged_wall.jpg"
+      ]
+      repeatS FALSE
+      repeatT FALSE
+    }
+    roughness 0.5
+    metalness 0
+  }
+}
+Floor {
+  translation 1 -10.4 0.1
+  rotation 0 0 1 1.5707996938995747
+  name "v_path(2)"
+  size 2 22
+  appearance Parquetry {
+    type "light strip"
+    colorOverride 0.8 0.8 0.8
+  }
+}
+Floor {
+  translation 0 -12.4 0.1
+  rotation 0 0 1 1.5707996938995747
+  name "v_path(4)"
+  size 2 5
+  appearance Parquetry {
+    type "light strip"
+    colorOverride 0.8 0.8 0.8
+  }
+}
+Floor {
+  translation 0 12.4 0.1
+  rotation 0 0 1 1.5707996938995747
+  name "v_path(5)"
+  size 2 5
+  appearance Parquetry {
+    type "light strip"
+    colorOverride 0.8 0.8 0.8
+  }
+}
+Floor {
+  translation 1 10.4 0.1
+  rotation 0 0 1 1.5707996938995747
+  name "v_path(3)"
+  size 2 22
+  appearance Parquetry {
+    type "light strip"
+    colorOverride 0.8 0.8 0.8
+  }
+}
+PalmTree {
+  translation 13 -3 0
+  name "palm_top_1"
+}
+PalmTree {
+  translation -13 -3 0
+  name "palm_top_1(1)"
+}
+PalmTree {
+  translation 13 4 0
+  name "palm_top_2"
+}
+PalmTree {
+  translation -13 4 0
+  name "palm_top_2(1)"
+}
+StraightStairs {
+  translation 14 0 0
+  stepSize 0.4 3 0.03
+  stringerWidth 0.1
+  stepAppearance VarnishedPine {
+    colorOverride 0.207843 0.517647 0.894118
+    textureTransform TextureTransform {
+      scale 4 4
+    }
+  }
+}
+StraightStairs {
+  translation -13 0 0
+  rotation 0 0 1 3.141592653589793
+  name "straight stairs(1)"
+  stepSize 0.4 3 0.03
+  stringerWidth 0.1
+  stepAppearance VarnishedPine {
+    colorOverride 0.207843 0.517647 0.894118
+    textureTransform TextureTransform {
+      scale 4 4
+    }
+  }
+}
+StraightStairs {
+  translation 0 -13.5 0
+  rotation 0 0 1 -1.5707996938995747
+  name "straight stairs(2)"
+  stepSize 0.4 29.9 0.03
+  nSteps 4
+  stringerWidth 0.1
+  stepAppearance VarnishedPine {
+    colorOverride 0.384314 0.627451 0.917647
+    textureTransform TextureTransform {
+      scale 4 4
+    }
+  }
+}
+Pose {
+  translation -9 8 0
+  children [
+    PottedTree {
+      translation -2.4 4 0
+      name "p1"
+    }
+    PottedTree {
+      translation -2.4 3.7 0
+      name "p2"
+    }
+    PottedTree {
+      translation -2.4 3.4 0
+      name "p3"
+    }
+    PottedTree {
+      translation -2.4 3.1 0
+      name "p4"
+    }
+    PottedTree {
+      translation -2.4 2.8 0
+      name "p5"
+    }
+    PottedTree {
+      translation -2.4 2.5 0
+      name "p6"
+    }
+    PottedTree {
+      translation -2.4 2.2 0
+      name "p7"
+    }
+    PottedTree {
+      translation -2.4 1.9 0
+      name "p8"
+    }
+    PottedTree {
+      translation -2.4 1.6 0
+      name "p9"
+    }
+    PottedTree {
+      translation -2.4 1.3 0
+      name "p10"
+    }
+    PottedTree {
+      translation -2.4 1 0
+      name "p_ext1"
+    }
+    PottedTree {
+      translation -2.4 0.7 0
+      name "p_ext2"
+    }
+    PottedTree {
+      translation -2.4 0.4 0
+      name "p_ext3"
+    }
+    PottedTree {
+      translation -2.4 0.1 0
+      name "p_ext4"
+    }
+    PottedTree {
+      translation -2.4 -0.2 0
+      name "p_ext5"
+    }
+    PottedTree {
+      translation -2.4 -0.5 0
+      name "p_ext6"
+    }
+    PottedTree {
+      translation -2.4 -0.8 0
+      name "p_ext7"
+    }
+    PottedTree {
+      translation -2.4 -1.1 0
+      name "p_ext8"
+    }
+    PottedTree {
+      translation -2.4 -1.4 0
+      name "p_ext9"
+    }
+    PottedTree {
+      translation -2.4 -1.7 0
+      name "p_ext10"
+    }
+    PottedTree {
+      translation -2.4 -2 0
+      name "p_ext11"
+    }
+    PottedTree {
+      translation -2.4 -2.3 0
+      name "p_ext12"
+    }
+    PottedTree {
+      translation -2.4 -2.6 0
+      name "p_ext13"
+    }
+    PottedTree {
+      translation -2.4 -2.77 0
+      name "p_ext_final1"
+    }
+    FlowerPot {
+      translation -2.7 4 0
+      name "f1"
+    }
+    FlowerPot {
+      translation -2.7 3.7 0
+      name "f2"
+    }
+    FlowerPot {
+      translation -2.7 3.4 0
+      name "f3"
+    }
+    FlowerPot {
+      translation -2.7 3.1 0
+      name "f4"
+    }
+    FlowerPot {
+      translation -2.7 2.8 0
+      name "f5"
+    }
+    FlowerPot {
+      translation -2.7 2.5 0
+      name "f6"
+    }
+    FlowerPot {
+      translation -2.7 2.2 0
+      name "f7"
+    }
+    FlowerPot {
+      translation -2.7 1.9 0
+      name "f8"
+    }
+    FlowerPot {
+      translation -2.7 1.6 0
+      name "f9"
+    }
+    FlowerPot {
+      translation -2.7 1.3 0
+      name "f10"
+    }
+    FlowerPot {
+      translation -2.7 1 0
+      name "f_ext1"
+    }
+    FlowerPot {
+      translation -2.7 0.7 0
+      name "f_ext2"
+    }
+    FlowerPot {
+      translation -2.7 0.4 0
+      name "f_ext3"
+    }
+    FlowerPot {
+      translation -2.7 0.1 0
+      name "f_ext4"
+    }
+    FlowerPot {
+      translation -2.7 -0.2 0
+      name "f_ext5"
+    }
+    FlowerPot {
+      translation -2.7 -0.5 0
+      name "f_ext6"
+    }
+    FlowerPot {
+      translation -2.7 -0.8 0
+      name "f_ext7"
+    }
+    FlowerPot {
+      translation -2.7 -1.1 0
+      name "f_ext8"
+    }
+    FlowerPot {
+      translation -2.7 -1.4 0
+      name "f_ext9"
+    }
+    FlowerPot {
+      translation -2.7 -1.7 0
+      name "f_ext10"
+    }
+    FlowerPot {
+      translation -2.7 -2 0
+      name "f_ext11"
+    }
+    FlowerPot {
+      translation -2.7 -2.3 0
+      name "f_ext12"
+    }
+    FlowerPot {
+      translation -2.7 -2.6 0
+      name "f_ext13"
+    }
+    FlowerPot {
+      translation -2.7 -2.77 0
+      name "f_ext_final2"
+    }
+    PottedTree {
+      translation -3 4 0
+      name "p11"
+    }
+    PottedTree {
+      translation -3 3.7 0
+      name "p12"
+    }
+    PottedTree {
+      translation -3 3.4 0
+      name "p13"
+    }
+    PottedTree {
+      translation -3 3.1 0
+      name "p14"
+    }
+    PottedTree {
+      translation -3 2.8 0
+      name "p15"
+    }
+    PottedTree {
+      translation -3 2.5 0
+      name "p16"
+    }
+    PottedTree {
+      translation -3 2.2 0
+      name "p17"
+    }
+    PottedTree {
+      translation -3 1.9 0
+      name "p18"
+    }
+    PottedTree {
+      translation -3 1.6 0
+      name "p19"
+    }
+    PottedTree {
+      translation -3 1.3 0
+      name "p20"
+    }
+    PottedTree {
+      translation -3 1 0
+      name "p_ext21"
+    }
+    PottedTree {
+      translation -3 0.7 0
+      name "p_ext22"
+    }
+    PottedTree {
+      translation -3 0.4 0
+      name "p_ext23"
+    }
+    PottedTree {
+      translation -3 0.1 0
+      name "p_ext24"
+    }
+    PottedTree {
+      translation -3 -0.2 0
+      name "p_ext25"
+    }
+    PottedTree {
+      translation -3 -0.5 0
+      name "p_ext26"
+    }
+    PottedTree {
+      translation -3 -0.8 0
+      name "p_ext27"
+    }
+    PottedTree {
+      translation -3 -1.1 0
+      name "p_ext28"
+    }
+    PottedTree {
+      translation -3 -1.4 0
+      name "p_ext29"
+    }
+    PottedTree {
+      translation -3 -1.7 0
+      name "p_ext30"
+    }
+    PottedTree {
+      translation -3 -2 0
+      name "p_ext31"
+    }
+    PottedTree {
+      translation -3 -2.3 0
+      name "p_ext32"
+    }
+    PottedTree {
+      translation -3 -2.6 0
+      name "p_ext33"
+    }
+    PottedTree {
+      translation -3 -2.77 0
+      name "p_ext_final3"
+    }
+  ]
+}
+Pose {
+  translation 16 8 0
+  children [
+    PottedTree {
+      translation -2.4 4 0
+      name "p1(4)"
+    }
+    PottedTree {
+      translation -2.4 3.7 0
+      name "p2(4)"
+    }
+    PottedTree {
+      translation -2.4 3.4 0
+      name "p3(4)"
+    }
+    PottedTree {
+      translation -2.4 3.1 0
+      name "p4(4)"
+    }
+    PottedTree {
+      translation -2.4 2.8 0
+      name "p5(4)"
+    }
+    PottedTree {
+      translation -2.4 2.5 0
+      name "p6(4)"
+    }
+    PottedTree {
+      translation -2.4 2.2 0
+      name "p7(4)"
+    }
+    PottedTree {
+      translation -2.4 1.9 0
+      name "p8(4)"
+    }
+    PottedTree {
+      translation -2.4 1.6 0
+      name "p9(4)"
+    }
+    PottedTree {
+      translation -2.4 1.3 0
+      name "p10(4)"
+    }
+    PottedTree {
+      translation -2.4 1 0
+      name "p_ext1(4)"
+    }
+    PottedTree {
+      translation -2.4 0.7 0
+      name "p_ext2(4)"
+    }
+    PottedTree {
+      translation -2.4 0.4 0
+      name "p_ext3(4)"
+    }
+    PottedTree {
+      translation -2.4 0.1 0
+      name "p_ext4(4)"
+    }
+    PottedTree {
+      translation -2.4 -0.2 0
+      name "p_ext5(4)"
+    }
+    PottedTree {
+      translation -2.4 -0.5 0
+      name "p_ext6(4)"
+    }
+    PottedTree {
+      translation -2.4 -0.8 0
+      name "p_ext7(4)"
+    }
+    PottedTree {
+      translation -2.4 -1.1 0
+      name "p_ext8(4)"
+    }
+    PottedTree {
+      translation -2.4 -1.4 0
+      name "p_ext9(4)"
+    }
+    PottedTree {
+      translation -2.4 -1.7 0
+      name "p_ext10(4)"
+    }
+    PottedTree {
+      translation -2.4 -2 0
+      name "p_ext11(4)"
+    }
+    PottedTree {
+      translation -2.4 -2.3 0
+      name "p_ext12(4)"
+    }
+    PottedTree {
+      translation -2.4 -2.6 0
+      name "p_ext13(4)"
+    }
+    PottedTree {
+      translation -2.4 -2.77 0
+      name "p_ext_final1(4)"
+    }
+    FlowerPot {
+      translation -2.7 4 0
+      name "f1(4)"
+    }
+    FlowerPot {
+      translation -2.7 3.7 0
+      name "f2(4)"
+    }
+    FlowerPot {
+      translation -2.7 3.4 0
+      name "f3(4)"
+    }
+    FlowerPot {
+      translation -2.7 3.1 0
+      name "f4(4)"
+    }
+    FlowerPot {
+      translation -2.7 2.8 0
+      name "f5(4)"
+    }
+    FlowerPot {
+      translation -2.7 2.5 0
+      name "f6(4)"
+    }
+    FlowerPot {
+      translation -2.7 2.2 0
+      name "f7(4)"
+    }
+    FlowerPot {
+      translation -2.7 1.9 0
+      name "f8(4)"
+    }
+    FlowerPot {
+      translation -2.7 1.6 0
+      name "f9(4)"
+    }
+    FlowerPot {
+      translation -2.7 1.3 0
+      name "f10(4)"
+    }
+    FlowerPot {
+      translation -2.7 1 0
+      name "f_ext1(4)"
+    }
+    FlowerPot {
+      translation -2.7 0.7 0
+      name "f_ext2(4)"
+    }
+    FlowerPot {
+      translation -2.7 0.4 0
+      name "f_ext3(4)"
+    }
+    FlowerPot {
+      translation -2.7 0.1 0
+      name "f_ext4(4)"
+    }
+    FlowerPot {
+      translation -2.7 -0.2 0
+      name "f_ext5(4)"
+    }
+    FlowerPot {
+      translation -2.7 -0.5 0
+      name "f_ext6(4)"
+    }
+    FlowerPot {
+      translation -2.7 -0.8 0
+      name "f_ext7(4)"
+    }
+    FlowerPot {
+      translation -2.7 -1.1 0
+      name "f_ext8(4)"
+    }
+    FlowerPot {
+      translation -2.7 -1.4 0
+      name "f_ext9(4)"
+    }
+    FlowerPot {
+      translation -2.7 -1.7 0
+      name "f_ext10(4)"
+    }
+    FlowerPot {
+      translation -2.7 -2 0
+      name "f_ext11(4)"
+    }
+    FlowerPot {
+      translation -2.7 -2.3 0
+      name "f_ext12(4)"
+    }
+    FlowerPot {
+      translation -2.7 -2.6 0
+      name "f_ext13(4)"
+    }
+    FlowerPot {
+      translation -2.7 -2.77 0
+      name "f_ext_final2(4)"
+    }
+    PottedTree {
+      translation -3 4 0
+      name "p11(4)"
+    }
+    PottedTree {
+      translation -3 3.7 0
+      name "p12(4)"
+    }
+    PottedTree {
+      translation -3 3.4 0
+      name "p13(4)"
+    }
+    PottedTree {
+      translation -3 3.1 0
+      name "p14(4)"
+    }
+    PottedTree {
+      translation -3 2.8 0
+      name "p15(4)"
+    }
+    PottedTree {
+      translation -3 2.5 0
+      name "p16(4)"
+    }
+    PottedTree {
+      translation -3 2.2 0
+      name "p17(4)"
+    }
+    PottedTree {
+      translation -3 1.9 0
+      name "p18(4)"
+    }
+    PottedTree {
+      translation -3 1.6 0
+      name "p19(4)"
+    }
+    PottedTree {
+      translation -3 1.3 0
+      name "p20(4)"
+    }
+    PottedTree {
+      translation -3 1 0
+      name "p_ext21(4)"
+    }
+    PottedTree {
+      translation -3 0.7 0
+      name "p_ext22(4)"
+    }
+    PottedTree {
+      translation -3 0.4 0
+      name "p_ext23(4)"
+    }
+    PottedTree {
+      translation -3 0.1 0
+      name "p_ext24(4)"
+    }
+    PottedTree {
+      translation -3 -0.2 0
+      name "p_ext25(4)"
+    }
+    PottedTree {
+      translation -3 -0.5 0
+      name "p_ext26(4)"
+    }
+    PottedTree {
+      translation -3 -0.8 0
+      name "p_ext27(4)"
+    }
+    PottedTree {
+      translation -3 -1.1 0
+      name "p_ext28(4)"
+    }
+    PottedTree {
+      translation -3 -1.4 0
+      name "p_ext29(4)"
+    }
+    PottedTree {
+      translation -3 -1.7 0
+      name "p_ext30(4)"
+    }
+    PottedTree {
+      translation -3 -2 0
+      name "p_ext31(4)"
+    }
+    PottedTree {
+      translation -3 -2.3 0
+      name "p_ext32(4)"
+    }
+    PottedTree {
+      translation -3 -2.6 0
+      name "p_ext33(4)"
+    }
+    PottedTree {
+      translation -3 -2.77 0
+      name "p_ext_final3(4)"
+    }
+  ]
+}
+Pose {
+  translation 16 -9 0
+  children [
+    PottedTree {
+      translation -2.4 4 0
+      name "p1(5)"
+    }
+    PottedTree {
+      translation -2.4 3.7 0
+      name "p2(5)"
+    }
+    PottedTree {
+      translation -2.4 3.4 0
+      name "p3(5)"
+    }
+    PottedTree {
+      translation -2.4 3.1 0
+      name "p4(5)"
+    }
+    PottedTree {
+      translation -2.4 2.8 0
+      name "p5(5)"
+    }
+    PottedTree {
+      translation -2.4 2.5 0
+      name "p6(5)"
+    }
+    PottedTree {
+      translation -2.4 2.2 0
+      name "p7(5)"
+    }
+    PottedTree {
+      translation -2.4 1.9 0
+      name "p8(5)"
+    }
+    PottedTree {
+      translation -2.4 1.6 0
+      name "p9(5)"
+    }
+    PottedTree {
+      translation -2.4 1.3 0
+      name "p10(5)"
+    }
+    PottedTree {
+      translation -2.4 1 0
+      name "p_ext1(5)"
+    }
+    PottedTree {
+      translation -2.4 0.7 0
+      name "p_ext2(5)"
+    }
+    PottedTree {
+      translation -2.4 0.4 0
+      name "p_ext3(5)"
+    }
+    PottedTree {
+      translation -2.4 0.1 0
+      name "p_ext4(5)"
+    }
+    PottedTree {
+      translation -2.4 -0.2 0
+      name "p_ext5(5)"
+    }
+    PottedTree {
+      translation -2.4 -0.5 0
+      name "p_ext6(5)"
+    }
+    PottedTree {
+      translation -2.4 -0.8 0
+      name "p_ext7(5)"
+    }
+    PottedTree {
+      translation -2.4 -1.1 0
+      name "p_ext8(5)"
+    }
+    PottedTree {
+      translation -2.4 -1.4 0
+      name "p_ext9(5)"
+    }
+    PottedTree {
+      translation -2.4 -1.7 0
+      name "p_ext10(5)"
+    }
+    PottedTree {
+      translation -2.4 -2 0
+      name "p_ext11(5)"
+    }
+    PottedTree {
+      translation -2.4 -2.3 0
+      name "p_ext12(5)"
+    }
+    PottedTree {
+      translation -2.4 -2.6 0
+      name "p_ext13(5)"
+    }
+    PottedTree {
+      translation -2.4 -2.77 0
+      name "p_ext_final1(5)"
+    }
+    FlowerPot {
+      translation -2.7 4 0
+      name "f1(5)"
+    }
+    FlowerPot {
+      translation -2.7 3.7 0
+      name "f2(5)"
+    }
+    FlowerPot {
+      translation -2.7 3.4 0
+      name "f3(5)"
+    }
+    FlowerPot {
+      translation -2.7 3.1 0
+      name "f4(5)"
+    }
+    FlowerPot {
+      translation -2.7 2.8 0
+      name "f5(5)"
+    }
+    FlowerPot {
+      translation -2.7 2.5 0
+      name "f6(5)"
+    }
+    FlowerPot {
+      translation -2.7 2.2 0
+      name "f7(5)"
+    }
+    FlowerPot {
+      translation -2.7 1.9 0
+      name "f8(5)"
+    }
+    FlowerPot {
+      translation -2.7 1.6 0
+      name "f9(5)"
+    }
+    FlowerPot {
+      translation -2.7 1.3 0
+      name "f10(5)"
+    }
+    FlowerPot {
+      translation -2.7 1 0
+      name "f_ext1(5)"
+    }
+    FlowerPot {
+      translation -2.7 0.7 0
+      name "f_ext2(5)"
+    }
+    FlowerPot {
+      translation -2.7 0.4 0
+      name "f_ext3(5)"
+    }
+    FlowerPot {
+      translation -2.7 0.1 0
+      name "f_ext4(5)"
+    }
+    FlowerPot {
+      translation -2.7 -0.2 0
+      name "f_ext5(5)"
+    }
+    FlowerPot {
+      translation -2.7 -0.5 0
+      name "f_ext6(5)"
+    }
+    FlowerPot {
+      translation -2.7 -0.8 0
+      name "f_ext7(5)"
+    }
+    FlowerPot {
+      translation -2.7 -1.1 0
+      name "f_ext8(5)"
+    }
+    FlowerPot {
+      translation -2.7 -1.4 0
+      name "f_ext9(5)"
+    }
+    FlowerPot {
+      translation -2.7 -1.7 0
+      name "f_ext10(5)"
+    }
+    FlowerPot {
+      translation -2.7 -2 0
+      name "f_ext11(5)"
+    }
+    FlowerPot {
+      translation -2.7 -2.3 0
+      name "f_ext12(5)"
+    }
+    FlowerPot {
+      translation -2.7 -2.6 0
+      name "f_ext13(5)"
+    }
+    FlowerPot {
+      translation -2.7 -2.77 0
+      name "f_ext_final2(5)"
+    }
+    PottedTree {
+      translation -3 4 0
+      name "p11(5)"
+    }
+    PottedTree {
+      translation -3 3.7 0
+      name "p12(5)"
+    }
+    PottedTree {
+      translation -3 3.4 0
+      name "p13(5)"
+    }
+    PottedTree {
+      translation -3 3.1 0
+      name "p14(5)"
+    }
+    PottedTree {
+      translation -3 2.8 0
+      name "p15(5)"
+    }
+    PottedTree {
+      translation -3 2.5 0
+      name "p16(5)"
+    }
+    PottedTree {
+      translation -3 2.2 0
+      name "p17(5)"
+    }
+    PottedTree {
+      translation -3 1.9 0
+      name "p18(5)"
+    }
+    PottedTree {
+      translation -3 1.6 0
+      name "p19(5)"
+    }
+    PottedTree {
+      translation -3 1.3 0
+      name "p20(5)"
+    }
+    PottedTree {
+      translation -3 1 0
+      name "p_ext21(5)"
+    }
+    PottedTree {
+      translation -3 0.7 0
+      name "p_ext22(5)"
+    }
+    PottedTree {
+      translation -3 0.4 0
+      name "p_ext23(5)"
+    }
+    PottedTree {
+      translation -3 0.1 0
+      name "p_ext24(5)"
+    }
+    PottedTree {
+      translation -3 -0.2 0
+      name "p_ext25(5)"
+    }
+    PottedTree {
+      translation -3 -0.5 0
+      name "p_ext26(5)"
+    }
+    PottedTree {
+      translation -3 -0.8 0
+      name "p_ext27(5)"
+    }
+    PottedTree {
+      translation -3 -1.1 0
+      name "p_ext28(5)"
+    }
+    PottedTree {
+      translation -3 -1.4 0
+      name "p_ext29(5)"
+    }
+    PottedTree {
+      translation -3 -1.7 0
+      name "p_ext30(5)"
+    }
+    PottedTree {
+      translation -3 -2 0
+      name "p_ext31(5)"
+    }
+    PottedTree {
+      translation -3 -2.3 0
+      name "p_ext32(5)"
+    }
+    PottedTree {
+      translation -3 -2.6 0
+      name "p_ext33(5)"
+    }
+    PottedTree {
+      translation -3 -2.77 0
+      name "p_ext_final3(5)"
+    }
+  ]
+}
+Pose {
+  translation -10 -10 0
+  rotation 0 0 1 1.5707996938995747
+  children [
+    PottedTree {
+      translation -2.4 4 0
+      name "p1(1)"
+    }
+    PottedTree {
+      translation -2.4 3.7 0
+      name "p2(1)"
+    }
+    PottedTree {
+      translation -2.4 3.4 0
+      name "p3(1)"
+    }
+    PottedTree {
+      translation -2.4 3.1 0
+      name "p4(1)"
+    }
+    PottedTree {
+      translation -2.4 2.8 0
+      name "p5(1)"
+    }
+    PottedTree {
+      translation -2.4 2.5 0
+      name "p6(1)"
+    }
+    PottedTree {
+      translation -2.4 2.2 0
+      name "p7(1)"
+    }
+    PottedTree {
+      translation -2.4 1.9 0
+      name "p8(1)"
+    }
+    PottedTree {
+      translation -2.4 1.6 0
+      name "p9(1)"
+    }
+    PottedTree {
+      translation -2.4 1.3 0
+      name "p10(1)"
+    }
+    PottedTree {
+      translation -2.4 1 0
+      name "p_ext1(1)"
+    }
+    PottedTree {
+      translation -2.4 0.7 0
+      name "p_ext2(1)"
+    }
+    PottedTree {
+      translation -2.4 0.4 0
+      name "p_ext3(1)"
+    }
+    PottedTree {
+      translation -2.4 0.1 0
+      name "p_ext4(1)"
+    }
+    PottedTree {
+      translation -2.4 -0.2 0
+      name "p_ext5(1)"
+    }
+    PottedTree {
+      translation -2.4 -0.5 0
+      name "p_ext6(1)"
+    }
+    PottedTree {
+      translation -2.4 -0.8 0
+      name "p_ext7(1)"
+    }
+    PottedTree {
+      translation -2.4 -1.1 0
+      name "p_ext8(1)"
+    }
+    PottedTree {
+      translation -2.4 -1.4 0
+      name "p_ext9(1)"
+    }
+    PottedTree {
+      translation -2.4 -1.7 0
+      name "p_ext10(1)"
+    }
+    PottedTree {
+      translation -2.4 -2 0
+      name "p_ext11(1)"
+    }
+    PottedTree {
+      translation -2.4 -2.3 0
+      name "p_ext12(1)"
+    }
+    PottedTree {
+      translation -2.4 -2.6 0
+      name "p_ext13(1)"
+    }
+    PottedTree {
+      translation -2.4 -2.77 0
+      name "p_ext_final1(1)"
+    }
+    FlowerPot {
+      translation -2.7 4 0
+      name "f1(1)"
+    }
+    FlowerPot {
+      translation -2.7 3.7 0
+      name "f2(1)"
+    }
+    FlowerPot {
+      translation -2.7 3.4 0
+      name "f3(1)"
+    }
+    FlowerPot {
+      translation -2.7 3.1 0
+      name "f4(1)"
+    }
+    FlowerPot {
+      translation -2.7 2.8 0
+      name "f5(1)"
+    }
+    FlowerPot {
+      translation -2.7 2.5 0
+      name "f6(1)"
+    }
+    FlowerPot {
+      translation -2.7 2.2 0
+      name "f7(1)"
+    }
+    FlowerPot {
+      translation -2.7 1.9 0
+      name "f8(1)"
+    }
+    FlowerPot {
+      translation -2.7 1.6 0
+      name "f9(1)"
+    }
+    FlowerPot {
+      translation -2.7 1.3 0
+      name "f10(1)"
+    }
+    FlowerPot {
+      translation -2.7 1 0
+      name "f_ext1(1)"
+    }
+    FlowerPot {
+      translation -2.7 0.7 0
+      name "f_ext2(1)"
+    }
+    FlowerPot {
+      translation -2.7 0.4 0
+      name "f_ext3(1)"
+    }
+    FlowerPot {
+      translation -2.7 0.1 0
+      name "f_ext4(1)"
+    }
+    FlowerPot {
+      translation -2.7 -0.2 0
+      name "f_ext5(1)"
+    }
+    FlowerPot {
+      translation -2.7 -0.5 0
+      name "f_ext6(1)"
+    }
+    FlowerPot {
+      translation -2.7 -0.8 0
+      name "f_ext7(1)"
+    }
+    FlowerPot {
+      translation -2.7 -1.1 0
+      name "f_ext8(1)"
+    }
+    FlowerPot {
+      translation -2.7 -1.4 0
+      name "f_ext9(1)"
+    }
+    FlowerPot {
+      translation -2.7 -1.7 0
+      name "f_ext10(1)"
+    }
+    FlowerPot {
+      translation -2.7 -2 0
+      name "f_ext11(1)"
+    }
+    FlowerPot {
+      translation -2.7 -2.3 0
+      name "f_ext12(1)"
+    }
+    FlowerPot {
+      translation -2.7 -2.6 0
+      name "f_ext13(1)"
+    }
+    FlowerPot {
+      translation -2.7 -2.77 0
+      name "f_ext_final2(1)"
+    }
+    PottedTree {
+      translation -3 4 0
+      name "p11(1)"
+    }
+    PottedTree {
+      translation -3 3.7 0
+      name "p12(1)"
+    }
+    PottedTree {
+      translation -3 3.4 0
+      name "p13(1)"
+    }
+    PottedTree {
+      translation -3 3.1 0
+      name "p14(1)"
+    }
+    PottedTree {
+      translation -3 2.8 0
+      name "p15(1)"
+    }
+    PottedTree {
+      translation -3 2.5 0
+      name "p16(1)"
+    }
+    PottedTree {
+      translation -3 2.2 0
+      name "p17(1)"
+    }
+    PottedTree {
+      translation -3 1.9 0
+      name "p18(1)"
+    }
+    PottedTree {
+      translation -3 1.6 0
+      name "p19(1)"
+    }
+    PottedTree {
+      translation -3 1.3 0
+      name "p20(1)"
+    }
+    PottedTree {
+      translation -3 1 0
+      name "p_ext21(1)"
+    }
+    PottedTree {
+      translation -3 0.7 0
+      name "p_ext22(1)"
+    }
+    PottedTree {
+      translation -3 0.4 0
+      name "p_ext23(1)"
+    }
+    PottedTree {
+      translation -3 0.1 0
+      name "p_ext24(1)"
+    }
+    PottedTree {
+      translation -3 -0.2 0
+      name "p_ext25(1)"
+    }
+    PottedTree {
+      translation -3 -0.5 0
+      name "p_ext26(1)"
+    }
+    PottedTree {
+      translation -3 -0.8 0
+      name "p_ext27(1)"
+    }
+    PottedTree {
+      translation -3 -1.1 0
+      name "p_ext28(1)"
+    }
+    PottedTree {
+      translation -3 -1.4 0
+      name "p_ext29(1)"
+    }
+    PottedTree {
+      translation -3 -1.7 0
+      name "p_ext30(1)"
+    }
+    PottedTree {
+      translation -3 -2 0
+      name "p_ext31(1)"
+    }
+    PottedTree {
+      translation -3 -2.3 0
+      name "p_ext32(1)"
+    }
+    PottedTree {
+      translation -3 -2.6 0
+      name "p_ext33(1)"
+    }
+    PottedTree {
+      translation -3 -2.77 0
+      name "p_ext_final3(1)"
+    }
+  ]
+}
+Pose {
+  translation -6 -10 0
+  rotation 0 0 1 1.5707996938995747
+  children [
+    PottedTree {
+      translation -2.4 0.7 0
+      name "p_ext2(7)"
+    }
+    PottedTree {
+      translation -2.4 0.4 0
+      name "p_ext3(7)"
+    }
+    PottedTree {
+      translation -2.4 0.1 0
+      name "p_ext4(7)"
+    }
+    PottedTree {
+      translation -2.4 -0.2 0
+      name "p_ext5(7)"
+    }
+    PottedTree {
+      translation -2.4 -0.5 0
+      name "p_ext6(7)"
+    }
+    PottedTree {
+      translation -2.4 -0.8 0
+      name "p_ext7(7)"
+    }
+    PottedTree {
+      translation -2.4 -1.1 0
+      name "p_ext8(7)"
+    }
+    PottedTree {
+      translation -2.4 -1.4 0
+      name "p_ext9(7)"
+    }
+    PottedTree {
+      translation -2.4 -1.7 0
+      name "p_ext10(7)"
+    }
+    PottedTree {
+      translation -2.4 -2 0
+      name "p_ext11(7)"
+    }
+    PottedTree {
+      translation -2.4 -2.3 0
+      name "p_ext12(7)"
+    }
+    PottedTree {
+      translation -2.4 -2.6 0
+      name "p_ext13(7)"
+    }
+    PottedTree {
+      translation -2.4 -2.77 0
+      name "p_ext_final1(7)"
+    }
+    FlowerPot {
+      translation -2.7 0.1 0
+      name "f_ext4(7)"
+    }
+    FlowerPot {
+      translation -2.7 -0.2 0
+      name "f_ext5(7)"
+    }
+    FlowerPot {
+      translation -2.7 -0.5 0
+      name "f_ext6(7)"
+    }
+    FlowerPot {
+      translation -2.7 -0.8 0
+      name "f_ext7(7)"
+    }
+    FlowerPot {
+      translation -2.7 -1.1 0
+      name "f_ext8(7)"
+    }
+    FlowerPot {
+      translation -2.7 -1.4 0
+      name "f_ext9(7)"
+    }
+    FlowerPot {
+      translation -2.7 -1.7 0
+      name "f_ext10(7)"
+    }
+    FlowerPot {
+      translation -2.7 -2 0
+      name "f_ext11(7)"
+    }
+    FlowerPot {
+      translation -2.7 -2.3 0
+      name "f_ext12(7)"
+    }
+    FlowerPot {
+      translation -2.7 -2.6 0
+      name "f_ext13(7)"
+    }
+    FlowerPot {
+      translation -2.7 -2.77 0
+      name "f_ext_final2(7)"
+    }
+    PottedTree {
+      translation -3 4 0
+      name "p11(7)"
+    }
+    PottedTree {
+      translation -3 0.4 0
+      name "p_ext23(7)"
+    }
+    PottedTree {
+      translation -3 0.1 0
+      name "p_ext24(7)"
+    }
+    PottedTree {
+      translation -3 -0.2 0
+      name "p_ext25(7)"
+    }
+    PottedTree {
+      translation -3 -0.5 0
+      name "p_ext26(7)"
+    }
+    PottedTree {
+      translation -3 -0.8 0
+      name "p_ext27(7)"
+    }
+    PottedTree {
+      translation -3 -1.1 0
+      name "p_ext28(7)"
+    }
+    PottedTree {
+      translation -3 -1.4 0
+      name "p_ext29(7)"
+    }
+    PottedTree {
+      translation -3 -1.7 0
+      name "p_ext30(7)"
+    }
+    PottedTree {
+      translation -3 -2 0
+      name "p_ext31(7)"
+    }
+    PottedTree {
+      translation -3 -2.3 0
+      name "p_ext32(7)"
+    }
+    PottedTree {
+      translation -3 -2.6 0
+      name "p_ext33(7)"
+    }
+    PottedTree {
+      translation -3 -2.77 0
+      name "p_ext_final3(7)"
+    }
+  ]
+}
+Pose {
+  translation 8 -10 0
+  rotation 0 0 1 1.5707996938995747
+  children [
+    PottedTree {
+      translation -2.4 4 0
+      name "p1(6)"
+    }
+    PottedTree {
+      translation -2.4 3.7 0
+      name "p2(6)"
+    }
+    PottedTree {
+      translation -2.4 3.4 0
+      name "p3(6)"
+    }
+    PottedTree {
+      translation -2.4 3.1 0
+      name "p4(6)"
+    }
+    PottedTree {
+      translation -2.4 2.8 0
+      name "p5(6)"
+    }
+    PottedTree {
+      translation -2.4 2.5 0
+      name "p6(6)"
+    }
+    PottedTree {
+      translation -2.4 2.2 0
+      name "p7(6)"
+    }
+    PottedTree {
+      translation -2.4 1.9 0
+      name "p8(6)"
+    }
+    PottedTree {
+      translation -2.4 1.6 0
+      name "p9(6)"
+    }
+    PottedTree {
+      translation -2.4 1.3 0
+      name "p10(6)"
+    }
+    PottedTree {
+      translation -2.4 1 0
+      name "p_ext1(6)"
+    }
+    PottedTree {
+      translation -2.4 0.7 0
+      name "p_ext2(6)"
+    }
+    PottedTree {
+      translation -2.4 0.4 0
+      name "p_ext3(6)"
+    }
+    PottedTree {
+      translation -2.4 0.1 0
+      name "p_ext4(6)"
+    }
+    PottedTree {
+      translation -2.4 -0.2 0
+      name "p_ext5(6)"
+    }
+    PottedTree {
+      translation -2.4 -0.5 0
+      name "p_ext6(6)"
+    }
+    PottedTree {
+      translation -2.4 -0.8 0
+      name "p_ext7(6)"
+    }
+    PottedTree {
+      translation -2.4 -1.1 0
+      name "p_ext8(6)"
+    }
+    PottedTree {
+      translation -2.4 -1.4 0
+      name "p_ext9(6)"
+    }
+    PottedTree {
+      translation -2.4 -1.7 0
+      name "p_ext10(6)"
+    }
+    PottedTree {
+      translation -2.4 -2 0
+      name "p_ext11(6)"
+    }
+    PottedTree {
+      translation -2.4 -2.3 0
+      name "p_ext12(6)"
+    }
+    PottedTree {
+      translation -2.4 -2.6 0
+      name "p_ext13(6)"
+    }
+    PottedTree {
+      translation -2.4 -2.77 0
+      name "p_ext_final1(6)"
+    }
+    FlowerPot {
+      translation -2.7 4 0
+      name "f1(6)"
+    }
+    FlowerPot {
+      translation -2.7 3.7 0
+      name "f2(6)"
+    }
+    FlowerPot {
+      translation -2.7 3.4 0
+      name "f3(6)"
+    }
+    FlowerPot {
+      translation -2.7 3.1 0
+      name "f4(6)"
+    }
+    FlowerPot {
+      translation -2.7 2.8 0
+      name "f5(6)"
+    }
+    FlowerPot {
+      translation -2.7 2.5 0
+      name "f6(6)"
+    }
+    FlowerPot {
+      translation -2.7 2.2 0
+      name "f7(6)"
+    }
+    FlowerPot {
+      translation -2.7 1.9 0
+      name "f8(6)"
+    }
+    FlowerPot {
+      translation -2.7 1.6 0
+      name "f9(6)"
+    }
+    FlowerPot {
+      translation -2.7 1.3 0
+      name "f10(6)"
+    }
+    FlowerPot {
+      translation -2.7 1 0
+      name "f_ext1(6)"
+    }
+    FlowerPot {
+      translation -2.7 0.7 0
+      name "f_ext2(6)"
+    }
+    FlowerPot {
+      translation -2.7 0.4 0
+      name "f_ext3(6)"
+    }
+    FlowerPot {
+      translation -2.7 0.1 0
+      name "f_ext4(6)"
+    }
+    FlowerPot {
+      translation -2.7 -0.2 0
+      name "f_ext5(6)"
+    }
+    FlowerPot {
+      translation -2.7 -0.5 0
+      name "f_ext6(6)"
+    }
+    FlowerPot {
+      translation -2.7 -0.8 0
+      name "f_ext7(6)"
+    }
+    FlowerPot {
+      translation -2.7 -1.1 0
+      name "f_ext8(6)"
+    }
+    FlowerPot {
+      translation -2.7 -1.4 0
+      name "f_ext9(6)"
+    }
+    FlowerPot {
+      translation -2.7 -1.7 0
+      name "f_ext10(6)"
+    }
+    FlowerPot {
+      translation -2.7 -2 0
+      name "f_ext11(6)"
+    }
+    FlowerPot {
+      translation -2.7 -2.3 0
+      name "f_ext12(6)"
+    }
+    FlowerPot {
+      translation -2.7 -2.6 0
+      name "f_ext13(6)"
+    }
+    FlowerPot {
+      translation -2.7 -2.77 0
+      name "f_ext_final2(6)"
+    }
+    PottedTree {
+      translation -3 4 0
+      name "p11(6)"
+    }
+    PottedTree {
+      translation -3 3.7 0
+      name "p12(6)"
+    }
+    PottedTree {
+      translation -3 3.4 0
+      name "p13(6)"
+    }
+    PottedTree {
+      translation -3 3.1 0
+      name "p14(6)"
+    }
+    PottedTree {
+      translation -3 2.8 0
+      name "p15(6)"
+    }
+    PottedTree {
+      translation -3 2.5 0
+      name "p16(6)"
+    }
+    PottedTree {
+      translation -3 2.2 0
+      name "p17(6)"
+    }
+    PottedTree {
+      translation -3 1.9 0
+      name "p18(6)"
+    }
+    PottedTree {
+      translation -3 1.6 0
+      name "p19(6)"
+    }
+    PottedTree {
+      translation -3 1.3 0
+      name "p20(6)"
+    }
+    PottedTree {
+      translation -3 1 0
+      name "p_ext21(6)"
+    }
+    PottedTree {
+      translation -3 0.7 0
+      name "p_ext22(6)"
+    }
+    PottedTree {
+      translation -3 0.4 0
+      name "p_ext23(6)"
+    }
+    PottedTree {
+      translation -3 0.1 0
+      name "p_ext24(6)"
+    }
+    PottedTree {
+      translation -3 -0.2 0
+      name "p_ext25(6)"
+    }
+    PottedTree {
+      translation -3 -0.5 0
+      name "p_ext26(6)"
+    }
+    PottedTree {
+      translation -3 -0.8 0
+      name "p_ext27(6)"
+    }
+    PottedTree {
+      translation -3 -1.1 0
+      name "p_ext28(6)"
+    }
+    PottedTree {
+      translation -3 -1.4 0
+      name "p_ext29(6)"
+    }
+    PottedTree {
+      translation -3 -1.7 0
+      name "p_ext30(6)"
+    }
+    PottedTree {
+      translation -3 -2 0
+      name "p_ext31(6)"
+    }
+    PottedTree {
+      translation -3 -2.3 0
+      name "p_ext32(6)"
+    }
+    PottedTree {
+      translation -3 -2.6 0
+      name "p_ext33(6)"
+    }
+    PottedTree {
+      translation -3 -2.77 0
+      name "p_ext_final3(6)"
+    }
+  ]
+}
+Pose {
+  translation -9 -6 0
+  children [
+    PottedTree {
+      translation -2.4 4 0
+      name "p1(3)"
+    }
+    PottedTree {
+      translation -2.4 3.7 0
+      name "p2(3)"
+    }
+    PottedTree {
+      translation -2.4 3.4 0
+      name "p3(3)"
+    }
+    PottedTree {
+      translation -2.4 3.1 0
+      name "p4(3)"
+    }
+    PottedTree {
+      translation -2.4 2.8 0
+      name "p5(3)"
+    }
+    PottedTree {
+      translation -2.4 2.5 0
+      name "p6(3)"
+    }
+    PottedTree {
+      translation -2.4 2.2 0
+      name "p7(3)"
+    }
+    PottedTree {
+      translation -2.4 1.9 0
+      name "p8(3)"
+    }
+    PottedTree {
+      translation -2.4 1.6 0
+      name "p9(3)"
+    }
+    PottedTree {
+      translation -2.4 1.3 0
+      name "p10(3)"
+    }
+    PottedTree {
+      translation -2.4 1 0
+      name "p_ext1(3)"
+    }
+    PottedTree {
+      translation -2.4 0.7 0
+      name "p_ext2(3)"
+    }
+    PottedTree {
+      translation -2.4 0.4 0
+      name "p_ext3(3)"
+    }
+    PottedTree {
+      translation -2.4 0.1 0
+      name "p_ext4(3)"
+    }
+    PottedTree {
+      translation -2.4 -0.2 0
+      name "p_ext5(3)"
+    }
+    PottedTree {
+      translation -2.4 -0.5 0
+      name "p_ext6(3)"
+    }
+    PottedTree {
+      translation -2.4 -0.8 0
+      name "p_ext7(3)"
+    }
+    PottedTree {
+      translation -2.4 -1.1 0
+      name "p_ext8(3)"
+    }
+    PottedTree {
+      translation -2.4 -1.4 0
+      name "p_ext9(3)"
+    }
+    PottedTree {
+      translation -2.4 -1.7 0
+      name "p_ext10(3)"
+    }
+    PottedTree {
+      translation -2.4 -2 0
+      name "p_ext11(3)"
+    }
+    PottedTree {
+      translation -2.4 -2.3 0
+      name "p_ext12(3)"
+    }
+    PottedTree {
+      translation -2.4 -2.6 0
+      name "p_ext13(3)"
+    }
+    PottedTree {
+      translation -2.4 -2.77 0
+      name "p_ext_final1(3)"
+    }
+    FlowerPot {
+      translation -2.7 4 0
+      name "f1(3)"
+    }
+    FlowerPot {
+      translation -2.7 3.7 0
+      name "f2(3)"
+    }
+    FlowerPot {
+      translation -2.7 3.4 0
+      name "f3(3)"
+    }
+    FlowerPot {
+      translation -2.7 3.1 0
+      name "f4(3)"
+    }
+    FlowerPot {
+      translation -2.7 2.8 0
+      name "f5(3)"
+    }
+    FlowerPot {
+      translation -2.7 2.5 0
+      name "f6(3)"
+    }
+    FlowerPot {
+      translation -2.7 2.2 0
+      name "f7(3)"
+    }
+    FlowerPot {
+      translation -2.7 1.9 0
+      name "f8(3)"
+    }
+    FlowerPot {
+      translation -2.7 1.6 0
+      name "f9(3)"
+    }
+    FlowerPot {
+      translation -2.7 1.3 0
+      name "f10(3)"
+    }
+    FlowerPot {
+      translation -2.7 1 0
+      name "f_ext1(3)"
+    }
+    FlowerPot {
+      translation -2.7 0.7 0
+      name "f_ext2(3)"
+    }
+    FlowerPot {
+      translation -2.7 0.4 0
+      name "f_ext3(3)"
+    }
+    FlowerPot {
+      translation -2.7 0.1 0
+      name "f_ext4(3)"
+    }
+    FlowerPot {
+      translation -2.7 -0.2 0
+      name "f_ext5(3)"
+    }
+    FlowerPot {
+      translation -2.7 -0.5 0
+      name "f_ext6(3)"
+    }
+    FlowerPot {
+      translation -2.7 -0.8 0
+      name "f_ext7(3)"
+    }
+    FlowerPot {
+      translation -2.7 -1.1 0
+      name "f_ext8(3)"
+    }
+    FlowerPot {
+      translation -2.7 -1.4 0
+      name "f_ext9(3)"
+    }
+    FlowerPot {
+      translation -2.7 -1.7 0
+      name "f_ext10(3)"
+    }
+    FlowerPot {
+      translation -2.7 -2 0
+      name "f_ext11(3)"
+    }
+    FlowerPot {
+      translation -2.7 -2.3 0
+      name "f_ext12(3)"
+    }
+    FlowerPot {
+      translation -2.7 -2.6 0
+      name "f_ext13(3)"
+    }
+    FlowerPot {
+      translation -2.7 -2.77 0
+      name "f_ext_final2(3)"
+    }
+    PottedTree {
+      translation -3 4 0
+      name "p11(3)"
+    }
+    PottedTree {
+      translation -3 3.7 0
+      name "p12(3)"
+    }
+    PottedTree {
+      translation -3 3.4 0
+      name "p13(3)"
+    }
+    PottedTree {
+      translation -3 3.1 0
+      name "p14(3)"
+    }
+    PottedTree {
+      translation -3 2.8 0
+      name "p15(3)"
+    }
+    PottedTree {
+      translation -3 2.5 0
+      name "p16(3)"
+    }
+    PottedTree {
+      translation -3 2.2 0
+      name "p17(3)"
+    }
+    PottedTree {
+      translation -3 1.9 0
+      name "p18(3)"
+    }
+    PottedTree {
+      translation -3 1.6 0
+      name "p19(3)"
+    }
+    PottedTree {
+      translation -3 1.3 0
+      name "p20(3)"
+    }
+    PottedTree {
+      translation -3 1 0
+      name "p_ext21(3)"
+    }
+    PottedTree {
+      translation -3 0.7 0
+      name "p_ext22(3)"
+    }
+    PottedTree {
+      translation -3 0.4 0
+      name "p_ext23(3)"
+    }
+    PottedTree {
+      translation -3 0.1 0
+      name "p_ext24(3)"
+    }
+    PottedTree {
+      translation -3 -0.2 0
+      name "p_ext25(3)"
+    }
+    PottedTree {
+      translation -3 -0.5 0
+      name "p_ext26(3)"
+    }
+    PottedTree {
+      translation -3 -0.8 0
+      name "p_ext27(3)"
+    }
+    PottedTree {
+      translation -3 -1.1 0
+      name "p_ext28(3)"
+    }
+    PottedTree {
+      translation -3 -1.4 0
+      name "p_ext29(3)"
+    }
+    PottedTree {
+      translation -3 -1.7 0
+      name "p_ext30(3)"
+    }
+    PottedTree {
+      translation -3 -2 0
+      name "p_ext31(3)"
+    }
+    PottedTree {
+      translation -3 -2.3 0
+      name "p_ext32(3)"
+    }
+    PottedTree {
+      translation -3 -2.6 0
+      name "p_ext33(3)"
+    }
+    PottedTree {
+      translation -3 -2.77 0
+      name "p_ext_final3(3)"
+    }
+  ]
+}
+Pose {
+  translation 9 15 0
+  rotation 0 0 1 1.5707996938995747
+  children [
+    PottedTree {
+      translation -2.4 4 0
+      name "p1(8)"
+    }
+    PottedTree {
+      translation -2.4 3.7 0
+      name "p2(8)"
+    }
+    PottedTree {
+      translation -2.4 3.4 0
+      name "p3(8)"
+    }
+    PottedTree {
+      translation -2.4 3.1 0
+      name "p4(8)"
+    }
+    PottedTree {
+      translation -2.4 2.8 0
+      name "p5(8)"
+    }
+    PottedTree {
+      translation -2.4 2.5 0
+      name "p6(8)"
+    }
+    PottedTree {
+      translation -2.4 2.2 0
+      name "p7(8)"
+    }
+    PottedTree {
+      translation -2.4 1.9 0
+      name "p8(8)"
+    }
+    PottedTree {
+      translation -2.4 1.6 0
+      name "p9(8)"
+    }
+    PottedTree {
+      translation -2.4 1.3 0
+      name "p10(8)"
+    }
+    PottedTree {
+      translation -2.4 1 0
+      name "p_ext1(8)"
+    }
+    PottedTree {
+      translation -2.4 0.7 0
+      name "p_ext2(8)"
+    }
+    PottedTree {
+      translation -2.4 0.4 0
+      name "p_ext3(8)"
+    }
+    PottedTree {
+      translation -2.4 0.1 0
+      name "p_ext4(8)"
+    }
+    PottedTree {
+      translation -2.4 -0.2 0
+      name "p_ext5(8)"
+    }
+    PottedTree {
+      translation -2.4 -0.5 0
+      name "p_ext6(8)"
+    }
+    PottedTree {
+      translation -2.4 -0.8 0
+      name "p_ext7(8)"
+    }
+    PottedTree {
+      translation -2.4 -1.1 0
+      name "p_ext8(8)"
+    }
+    PottedTree {
+      translation -2.4 -1.4 0
+      name "p_ext9(8)"
+    }
+    PottedTree {
+      translation -2.4 -1.7 0
+      name "p_ext10(8)"
+    }
+    PottedTree {
+      translation -2.4 -2 0
+      name "p_ext11(8)"
+    }
+    PottedTree {
+      translation -2.4 -2.3 0
+      name "p_ext12(8)"
+    }
+    PottedTree {
+      translation -2.4 -2.6 0
+      name "p_ext13(8)"
+    }
+    PottedTree {
+      translation -2.4 -2.77 0
+      name "p_ext_final1(8)"
+    }
+    FlowerPot {
+      translation -2.7 4 0
+      name "f1(8)"
+    }
+    FlowerPot {
+      translation -2.7 3.7 0
+      name "f2(8)"
+    }
+    FlowerPot {
+      translation -2.7 3.4 0
+      name "f3(8)"
+    }
+    FlowerPot {
+      translation -2.7 3.1 0
+      name "f4(8)"
+    }
+    FlowerPot {
+      translation -2.7 2.8 0
+      name "f5(8)"
+    }
+    FlowerPot {
+      translation -2.7 2.5 0
+      name "f6(8)"
+    }
+    FlowerPot {
+      translation -2.7 2.2 0
+      name "f7(8)"
+    }
+    FlowerPot {
+      translation -2.7 1.9 0
+      name "f8(8)"
+    }
+    FlowerPot {
+      translation -2.7 1.6 0
+      name "f9(8)"
+    }
+    FlowerPot {
+      translation -2.7 1.3 0
+      name "f10(8)"
+    }
+    FlowerPot {
+      translation -2.7 1 0
+      name "f_ext1(8)"
+    }
+    FlowerPot {
+      translation -2.7 0.7 0
+      name "f_ext2(8)"
+    }
+    FlowerPot {
+      translation -2.7 0.4 0
+      name "f_ext3(8)"
+    }
+    FlowerPot {
+      translation -2.7 0.1 0
+      name "f_ext4(8)"
+    }
+    FlowerPot {
+      translation -2.7 -0.2 0
+      name "f_ext5(8)"
+    }
+    FlowerPot {
+      translation -2.7 -0.5 0
+      name "f_ext6(8)"
+    }
+    FlowerPot {
+      translation -2.7 -0.8 0
+      name "f_ext7(8)"
+    }
+    FlowerPot {
+      translation -2.7 -1.1 0
+      name "f_ext8(8)"
+    }
+    FlowerPot {
+      translation -2.7 -1.4 0
+      name "f_ext9(8)"
+    }
+    FlowerPot {
+      translation -2.7 -1.7 0
+      name "f_ext10(8)"
+    }
+    FlowerPot {
+      translation -2.7 -2 0
+      name "f_ext11(8)"
+    }
+    FlowerPot {
+      translation -2.7 -2.3 0
+      name "f_ext12(8)"
+    }
+    FlowerPot {
+      translation -2.7 -2.6 0
+      name "f_ext13(8)"
+    }
+    FlowerPot {
+      translation -2.7 -2.77 0
+      name "f_ext_final2(8)"
+    }
+    PottedTree {
+      translation -3 4 0
+      name "p11(8)"
+    }
+    PottedTree {
+      translation -3 3.7 0
+      name "p12(8)"
+    }
+    PottedTree {
+      translation -3 3.4 0
+      name "p13(8)"
+    }
+    PottedTree {
+      translation -3 3.1 0
+      name "p14(8)"
+    }
+    PottedTree {
+      translation -3 2.8 0
+      name "p15(8)"
+    }
+    PottedTree {
+      translation -3 2.5 0
+      name "p16(8)"
+    }
+    PottedTree {
+      translation -3 2.2 0
+      name "p17(8)"
+    }
+    PottedTree {
+      translation -3 1.9 0
+      name "p18(8)"
+    }
+    PottedTree {
+      translation -3 1.6 0
+      name "p19(8)"
+    }
+    PottedTree {
+      translation -3 1.3 0
+      name "p20(8)"
+    }
+    PottedTree {
+      translation -3 1 0
+      name "p_ext21(8)"
+    }
+    PottedTree {
+      translation -3 0.7 0
+      name "p_ext22(8)"
+    }
+    PottedTree {
+      translation -3 0.4 0
+      name "p_ext23(8)"
+    }
+    PottedTree {
+      translation -3 0.1 0
+      name "p_ext24(8)"
+    }
+    PottedTree {
+      translation -3 -0.2 0
+      name "p_ext25(8)"
+    }
+    PottedTree {
+      translation -3 -0.5 0
+      name "p_ext26(8)"
+    }
+    PottedTree {
+      translation -3 -0.8 0
+      name "p_ext27(8)"
+    }
+    PottedTree {
+      translation -3 -1.1 0
+      name "p_ext28(8)"
+    }
+    PottedTree {
+      translation -3 -1.4 0
+      name "p_ext29(8)"
+    }
+    PottedTree {
+      translation -3 -1.7 0
+      name "p_ext30(8)"
+    }
+    PottedTree {
+      translation -3 -2 0
+      name "p_ext31(8)"
+    }
+    PottedTree {
+      translation -3 -2.3 0
+      name "p_ext32(8)"
+    }
+    PottedTree {
+      translation -3 -2.6 0
+      name "p_ext33(8)"
+    }
+    PottedTree {
+      translation -3 -2.77 0
+      name "p_ext_final3(8)"
+    }
+  ]
+}
+Pose {
+  translation -10 16 0
+  rotation 0 0 1 1.5707996938995747
+  children [
+    PottedTree {
+      translation -2.4 4 0
+      name "p1(2)"
+    }
+    PottedTree {
+      translation -2.4 3.7 0
+      name "p2(2)"
+    }
+    PottedTree {
+      translation -2.4 3.4 0
+      name "p3(2)"
+    }
+    PottedTree {
+      translation -2.4 3.1 0
+      name "p4(2)"
+    }
+    PottedTree {
+      translation -2.4 2.8 0
+      name "p5(2)"
+    }
+    PottedTree {
+      translation -2.4 2.5 0
+      name "p6(2)"
+    }
+    PottedTree {
+      translation -2.4 2.2 0
+      name "p7(2)"
+    }
+    PottedTree {
+      translation -2.4 1.9 0
+      name "p8(2)"
+    }
+    PottedTree {
+      translation -2.4 1.6 0
+      name "p9(2)"
+    }
+    PottedTree {
+      translation -2.4 1.3 0
+      name "p10(2)"
+    }
+    PottedTree {
+      translation -2.4 1 0
+      name "p_ext1(2)"
+    }
+    PottedTree {
+      translation -2.4 0.7 0
+      name "p_ext2(2)"
+    }
+    PottedTree {
+      translation -2.4 0.4 0
+      name "p_ext3(2)"
+    }
+    PottedTree {
+      translation -2.4 0.1 0
+      name "p_ext4(2)"
+    }
+    PottedTree {
+      translation -2.4 -0.2 0
+      name "p_ext5(2)"
+    }
+    PottedTree {
+      translation -2.4 -0.5 0
+      name "p_ext6(2)"
+    }
+    PottedTree {
+      translation -2.4 -0.8 0
+      name "p_ext7(2)"
+    }
+    PottedTree {
+      translation -2.4 -1.1 0
+      name "p_ext8(2)"
+    }
+    PottedTree {
+      translation -2.4 -1.4 0
+      name "p_ext9(2)"
+    }
+    PottedTree {
+      translation -2.4 -1.7 0
+      name "p_ext10(2)"
+    }
+    PottedTree {
+      translation -2.4 -2 0
+      name "p_ext11(2)"
+    }
+    PottedTree {
+      translation -2.4 -2.3 0
+      name "p_ext12(2)"
+    }
+    PottedTree {
+      translation -2.4 -2.6 0
+      name "p_ext13(2)"
+    }
+    PottedTree {
+      translation -2.4 -2.77 0
+      name "p_ext_final1(2)"
+    }
+    FlowerPot {
+      translation -2.7 4 0
+      name "f1(2)"
+    }
+    FlowerPot {
+      translation -2.7 3.7 0
+      name "f2(2)"
+    }
+    FlowerPot {
+      translation -2.7 3.4 0
+      name "f3(2)"
+    }
+    FlowerPot {
+      translation -2.7 3.1 0
+      name "f4(2)"
+    }
+    FlowerPot {
+      translation -2.7 2.8 0
+      name "f5(2)"
+    }
+    FlowerPot {
+      translation -2.7 2.5 0
+      name "f6(2)"
+    }
+    FlowerPot {
+      translation -2.7 2.2 0
+      name "f7(2)"
+    }
+    FlowerPot {
+      translation -2.7 1.9 0
+      name "f8(2)"
+    }
+    FlowerPot {
+      translation -2.7 1.6 0
+      name "f9(2)"
+    }
+    FlowerPot {
+      translation -2.7 1.3 0
+      name "f10(2)"
+    }
+    FlowerPot {
+      translation -2.7 1 0
+      name "f_ext1(2)"
+    }
+    FlowerPot {
+      translation -2.7 0.7 0
+      name "f_ext2(2)"
+    }
+    FlowerPot {
+      translation -2.7 0.4 0
+      name "f_ext3(2)"
+    }
+    FlowerPot {
+      translation -2.7 0.1 0
+      name "f_ext4(2)"
+    }
+    FlowerPot {
+      translation -2.7 -0.2 0
+      name "f_ext5(2)"
+    }
+    FlowerPot {
+      translation -2.7 -0.5 0
+      name "f_ext6(2)"
+    }
+    FlowerPot {
+      translation -2.7 -0.8 0
+      name "f_ext7(2)"
+    }
+    FlowerPot {
+      translation -2.7 -1.1 0
+      name "f_ext8(2)"
+    }
+    FlowerPot {
+      translation -2.7 -1.4 0
+      name "f_ext9(2)"
+    }
+    FlowerPot {
+      translation -2.7 -1.7 0
+      name "f_ext10(2)"
+    }
+    FlowerPot {
+      translation -2.7 -2 0
+      name "f_ext11(2)"
+    }
+    FlowerPot {
+      translation -2.7 -2.3 0
+      name "f_ext12(2)"
+    }
+    FlowerPot {
+      translation -2.7 -2.6 0
+      name "f_ext13(2)"
+    }
+    FlowerPot {
+      translation -2.7 -2.77 0
+      name "f_ext_final2(2)"
+    }
+    PottedTree {
+      translation -3 4 0
+      name "p11(2)"
+    }
+    PottedTree {
+      translation -3 3.7 0
+      name "p12(2)"
+    }
+    PottedTree {
+      translation -3 3.4 0
+      name "p13(2)"
+    }
+    PottedTree {
+      translation -3 3.1 0
+      name "p14(2)"
+    }
+    PottedTree {
+      translation -3 2.8 0
+      name "p15(2)"
+    }
+    PottedTree {
+      translation -3 2.5 0
+      name "p16(2)"
+    }
+    PottedTree {
+      translation -3 2.2 0
+      name "p17(2)"
+    }
+    PottedTree {
+      translation -3 1.9 0
+      name "p18(2)"
+    }
+    PottedTree {
+      translation -3 1.6 0
+      name "p19(2)"
+    }
+    PottedTree {
+      translation -3 1.3 0
+      name "p20(2)"
+    }
+    PottedTree {
+      translation -3 1 0
+      name "p_ext21(2)"
+    }
+    PottedTree {
+      translation -3 0.7 0
+      name "p_ext22(2)"
+    }
+    PottedTree {
+      translation -3 0.4 0
+      name "p_ext23(2)"
+    }
+    PottedTree {
+      translation -3 0.1 0
+      name "p_ext24(2)"
+    }
+    PottedTree {
+      translation -3 -0.2 0
+      name "p_ext25(2)"
+    }
+    PottedTree {
+      translation -3 -0.5 0
+      name "p_ext26(2)"
+    }
+    PottedTree {
+      translation -3 -0.8 0
+      name "p_ext27(2)"
+    }
+    PottedTree {
+      translation -3 -1.1 0
+      name "p_ext28(2)"
+    }
+    PottedTree {
+      translation -3 -1.4 0
+      name "p_ext29(2)"
+    }
+    PottedTree {
+      translation -3 -1.7 0
+      name "p_ext30(2)"
+    }
+    PottedTree {
+      translation -3 -2 0
+      name "p_ext31(2)"
+    }
+    PottedTree {
+      translation -3 -2.3 0
+      name "p_ext32(2)"
+    }
+    PottedTree {
+      translation -3 -2.6 0
+      name "p_ext33(2)"
+    }
+    PottedTree {
+      translation -3 -2.77 0
+      name "p_ext_final3(2)"
+    }
+  ]
+}
+Pose {
+  translation -15 -6 0
+  children [
+    FlowerPot {
+      translation 1 -4 0
+      name "nb57"
+    }
+    FlowerPot {
+      translation 1.3 -4 0
+      name "nb58"
+    }
+    FlowerPot {
+      translation 1.6 -4 0
+      name "nb59"
+    }
+    FlowerPot {
+      translation 1.9 -4 0
+      name "nb60"
+    }
+    FlowerPot {
+      translation 2.2 -4 0
+      name "nb61"
+    }
+    FlowerPot {
+      translation 2.5 -4 0
+      name "nb62"
+    }
+    FlowerPot {
+      translation 2.8 -4 0
+      name "nb63"
+    }
+    FlowerPot {
+      translation 3 -4 0
+      name "nb64"
+    }
+    PottedTree {
+      translation 1 -4.3 0
+      name "nb65"
+    }
+    PottedTree {
+      translation 1.3 -4.3 0
+      name "nb66"
+    }
+    PottedTree {
+      translation 1.6 -4.3 0
+      name "nb67"
+    }
+    PottedTree {
+      translation 1.9 -4.3 0
+      name "nb68"
+    }
+    PottedTree {
+      translation 2.2 -4.3 0
+      name "nb69"
+    }
+    PottedTree {
+      translation 2.5 -4.3 0
+      name "nb70"
+    }
+    PottedTree {
+      translation 2.8 -4.3 0
+      name "nb71"
+    }
+    PottedTree {
+      translation 3 -4.3 0
+      name "nb72"
+    }
+    FlowerPot {
+      translation 1 -4.6 0
+      name "nb73"
+    }
+    FlowerPot {
+      translation 1.3 -4.6 0
+      name "nb74"
+    }
+    FlowerPot {
+      translation 1.6 -4.6 0
+      name "nb75"
+    }
+    FlowerPot {
+      translation 1.9 -4.6 0
+      name "nb76"
+    }
+    FlowerPot {
+      translation 2.2 -4.6 0
+      name "nb77"
+    }
+    FlowerPot {
+      translation 2.5 -4.6 0
+      name "nb78"
+    }
+    FlowerPot {
+      translation 2.8 -4.6 0
+      name "nb79"
+    }
+    FlowerPot {
+      translation 3 -4.6 0
+      name "nb80"
+    }
+    PottedTree {
+      translation 1 -4.9 0
+      name "nb81"
+    }
+    PottedTree {
+      translation 1.3 -4.9 0
+      name "nb82"
+    }
+    PottedTree {
+      translation 1.6 -4.9 0
+      name "nb83"
+    }
+    PottedTree {
+      translation 1.9 -4.9 0
+      name "nb84"
+    }
+    PottedTree {
+      translation 2.2 -4.9 0
+      name "nb85"
+    }
+    PottedTree {
+      translation 2.5 -4.9 0
+      name "nb86"
+    }
+    PottedTree {
+      translation 2.8 -4.9 0
+      name "nb87"
+    }
+    PottedTree {
+      translation 3 -4.9 0
+      name "nb88"
+    }
+  ]
+}
+SquareManhole {
+}
+Crazyflie {
+  translation 0 0 0.1
+  controller "autonomus"
+  extensionSlot [
+    Camera {
+      rotation 0 1 0 1.57
+      name "camera-down"
+      fieldOfView 1
+      width 640
+      height 640
+      antiAliasing TRUE
+    }
+    Camera {
+      name "camera-up"
+      fieldOfView 1
+      width 640
+      height 640
+      antiAliasing TRUE
+    }
+  ]
+}
+Cypress {
+  translation 12 13 0
+}
+Cypress {
+  translation 12 -12 0
+  name "cypress tree(1)"
+}
